@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GestionVehiculos.Models;
-
+// table name
+[Table("Roles")]
 public class Role
 {
     [Key]

@@ -77,7 +77,16 @@
             "dependsOn": [
                 "docker-build: debug"
             ],
-            "dockerRun": {},
+            "dockerRun": {
+                "containerName": "gestionvehicular-svc",
+                "network": "services_net",
+                "ports": [
+                    {
+                        "hostPort": 4080,
+                        "containerPort": 80
+                    }
+                ]
+            },
             "netCore": {
                 "appProject": "${workspaceFolder}/GestionVehicular/GestionVehicular.csproj",
                 "enableDebugging": true
