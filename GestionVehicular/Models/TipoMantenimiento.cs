@@ -1,17 +1,13 @@
-
-
 namespace GestionVehicular.Models;
 
-// table name
-[Table("Role")]
-
-public class Role
+[Table("TipoMantenimiento")]
+public class TipoMantenimiento
 {
     [Key]
-    public int RolId { get; set; }
+    public int TipoMantenimientoId { get; set; }
 
     [Required]
-    [MaxLength(100)]
+    [MaxLength(200)]
     public string Nombre { get; set; }
 
     [Required]
@@ -21,5 +17,5 @@ public class Role
     public DateTime FechaCreacion { get; set; }
 
     // Navigation properties
-    public virtual ICollection<Usuario> Usuarios { get; set; }
+    public virtual ICollection<Mantenimiento> Mantenimientos { get; set; }
 }

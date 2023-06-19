@@ -1,6 +1,3 @@
-using GestionVehiculos.Context;
-using GestionVehiculos.Models;
-using Microsoft.AspNetCore.Mvc;
 
 namespace GestionVehiculos.Controllers;
 

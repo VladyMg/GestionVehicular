@@ -1,25 +1,60 @@
-namespace GestionVehiculos.Models;
 
-[Table("Usuarios")]
+
+namespace GestionVehicular.Models;
+
+[Table("Usuario")]
 public class Usuario
 {
     [Key]
     public int UsuarioId { get; set; }
+
+    [Required]
+    [MaxLength(10)]
     public string Cedula { get; set; }
+
+    [Required]
+    [MaxLength(100)]
     public string Contrasenia { get; set; }
+
+    [Required]
+    [MaxLength(50)]
     public string Nombre { get; set; }
+
+    [Required]
+    [MaxLength(50)]
     public string Apellido { get; set; }
-    public DateTime FechaNacimiento { get; set; }
+
+    [Required]
+    [MaxLength(1)]
+    public string FechaNacimiento { get; set; }
+
+    [Required]
+    [MaxLength(10)]
     public string TipoSangre { get; set; }
+
+    [Required]
+    [MaxLength(10)]
     public string Telefono { get; set; }
+
+    [Required]
+    [MaxLength(50)]
     public string CiudadNacimiento { get; set; }
+
+    [Required]
+    [MaxLength(100)]
     public string Rango { get; set; }
-    public bool? EsActivo { get; set; }
-    public int? SubcircuitoId { get; set; }
-    public string Password { get; set; }
 
-    // Propiedad de navegación
+    [Required]
+    public bool EsActivo { get; set; }
 
+    [ForeignKey("Rol")]
     public int? RolId { get; set; }
-    public Role Role { get; set; }
+    public virtual Role Rol { get; set; }
+
+    [ForeignKey("Subcircuito")]
+    public int? SubcircuitoId { get; set; }
+    public virtual Subcircuito Subcircuito { get; set; }
+
+    [Required]
+    public DateTime FechaCreacion { get; set; }
 }
