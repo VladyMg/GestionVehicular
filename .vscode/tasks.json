@@ -78,7 +78,7 @@
                 "docker-build: debug"
             ],
             "dockerRun": {
-                "containerName": "gestionvehicular-svc",
+                "containerName": "gestionvehicular-svc-dev",
                 "network": "services_net",
                 "ports": [
                     {
