@@ -1,4 +1,3 @@
-using GestionVehiculos.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace GestionVehiculos.Context;
