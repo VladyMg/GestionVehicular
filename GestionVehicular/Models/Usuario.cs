@@ -25,8 +25,8 @@ public class Usuario
     public string Apellido { get; set; }
 
     [Required]
-    [MaxLength(1)]
-    public string FechaNacimiento { get; set; }
+    public DateTime FechaNacimiento { get; set; }
+
 
     [Required]
     [MaxLength(10)]
