@@ -1,0 +1,108 @@
+﻿@page
+@model GestionVehicular.Controllers.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Usuario[0].Cedula)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Usuario[0].Contrasenia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Usuario[0].Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Usuario[0].Apellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Usuario[0].FechaNacimiento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Usuario[0].TipoSangre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Usuario[0].Telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Usuario[0].CiudadNacimiento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Usuario[0].Rango)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Usuario[0].EsActivo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Usuario[0].SubcircuitoId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Usuario[0].Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Usuario[0].RolId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Usuario) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cedula)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Contrasenia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaNacimiento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoSangre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CiudadNacimiento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rango)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EsActivo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubcircuitoId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RolId)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.UsuarioId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.UsuarioId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.UsuarioId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
