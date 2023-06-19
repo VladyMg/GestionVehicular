@@ -1,0 +1,17 @@
+{
+    "spellright.language": [
+        "en",
+        "es"
+    ],
+    "spellright.documentTypes": [
+        "markdown",
+        "latex",
+        "plaintext",
+        "aspnetcorerazor"
+    ],
+    "spellright.parserByClass": {
+        "aspnetcorerazor": {
+            "parser": "plain"
+        }
+    }
+}
