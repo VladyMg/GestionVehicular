@@ -1,6 +1,5 @@
-using System.Net;
-using GestionVehiculos.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
