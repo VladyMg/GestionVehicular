@@ -1,28 +1,41 @@
-@model IEnumerable<GestionVehiculos.Models.Role>
+﻿@model IEnumerable<GestionVehiculos.Models.Role>
 
-<h2>Roles</h2>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EsActivo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.RolId }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.RolId })
+                @Html.DisplayFor(modelItem => item.EsActivo)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.RolId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.RolId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.RolId">Delete</a>
             </td>
         </tr>
-    }
+}
+    </tbody>
 </table>
