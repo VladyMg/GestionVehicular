@@ -22,7 +22,7 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    public IActionResult Login(User user)
+    public IActionResult Login(Usuario user)
     {
         // Aquí iría la lógica para validar las credenciales del usuario.
         // Como este es un ejemplo simple, vamos a omitirla.

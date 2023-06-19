@@ -1,5 +1,4 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace GestionVehiculos.Models;
 // table name
@@ -10,4 +9,7 @@ public class Role
     public int RolId { get; set; }
     public string Nombre { get; set; }
     public bool? EsActivo { get; set; }
+
+    // Propiedad de navegación
+    public ICollection<Usuario> Usuarios { get; set; }
 }

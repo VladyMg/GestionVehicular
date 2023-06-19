@@ -1,15 +1,13 @@
-using GestionVehiculos.Context;
-using GestionVehiculos.Models;
-using Microsoft.AspNetCore.Mvc;
+
 
 namespace GestionVehiculos.Controllers;
 
-public class RoleController : Controller
+public class RolesController : Controller
 {
-    private readonly ILogger<RoleController> _logger;
+    private readonly ILogger<RolesController> _logger;
     private ApplicationDbContext _context;
 
-    public RoleController(ILogger<RoleController> logger, ApplicationDbContext context)
+    public RolesController(ILogger<RolesController> logger, ApplicationDbContext context)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _context = context ?? throw new ArgumentNullException(nameof(context));
