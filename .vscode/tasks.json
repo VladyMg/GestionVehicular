@@ -82,7 +82,7 @@
                 "network": "services_net",
                 "ports": [
                     {
-                        "hostPort": 4080,
+                        "hostPort": 4090,
                         "containerPort": 80
                     }
                 ]
