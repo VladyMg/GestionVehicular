@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace GestionVehicular.Controllers;
@@ -15,7 +16,8 @@ public class CircuitosController : Controller
     // GET: Circuito
     public async Task<IActionResult> Index()
     {
-        return View(await _context.Circuitos.ToListAsync());
+        var applicationDbContext = _context.Circuitos.Include(u=> u.Distrito);
+        return View(await applicationDbContext.ToListAsync());
     }
 
   // GET: Circuito/Details/5
@@ -27,6 +29,7 @@ public class CircuitosController : Controller
         }
 
         var circuito = await _context.Circuitos
+            .Include(u => u.Distrito)
             .FirstOrDefaultAsync(m => m.CircuitoId == id);
         if (circuito == null)
         {
@@ -38,6 +41,7 @@ public class CircuitosController : Controller
     // GET: Circuito/Create
     public IActionResult Create()
     {
+        ViewData["DistritoId"] = new SelectList(_context.Distritos, "DistritoId", "Nombre");
         return View();
     }
 
@@ -54,6 +58,7 @@ public class CircuitosController : Controller
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        ViewData["DistritoId"] = new SelectList(_context.Distritos, "DistritoId", "Nombre", Circuito.DistritoId);
         return View(Circuito);
     }
      // GET: Circuito/Edit/5
@@ -69,6 +74,7 @@ public class CircuitosController : Controller
         {
             return NotFound();
         }
+        ViewData["DistritoId"] = new SelectList(_context.Distritos, "DistritoId", "Nombre", Circuito.DistritoId);
         return View(Circuito);
     }
 
@@ -104,6 +110,7 @@ public class CircuitosController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
+        ViewData["DistritoId"] = new SelectList(_context.Distritos, "DistritoId", "Nombre", circuito.DistritoId);
         return View(circuito);
     }
 
@@ -116,6 +123,7 @@ public class CircuitosController : Controller
         }
 
         var Circuito = await _context.Circuitos
+            .Include(u => u.Distrito)
             .FirstOrDefaultAsync(m => m.CircuitoId == id);
         if (Circuito == null)
         {
@@ -132,7 +140,7 @@ public class CircuitosController : Controller
     {
         if (_context.Circuitos == null)
         {
-            return Problem("Entity set 'ApplicationDbContext.Roles'  is null.");
+            return Problem("Entity set 'ApplicationDbContext.Circuito'  is null.");
         }
         var circuito = await _context.Circuitos.FindAsync(id);
         if (circuito != null)

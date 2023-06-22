@@ -1,38 +1,43 @@
-@model GestionVehicular.Models.Circuito
+@model GestionVehicular.Models.Distrito
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create";
 }
 
-<h1>Edit</h1>
+<h1>Create</h1>
 
-<h4>Circuito</h4>
+<h4>Distritos</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="CircuitoId" />
             <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>
                 <input asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NoCircuito" class="control-label"></label>
-                <input asp-for="NoCircuito" class="form-control" />
-                <span asp-validation-for="NoCircuito" class="text-danger"></span>
+                <label asp-for="Provincia" class="control-label"></label>
+                <input asp-for="Provincia" class="form-control" />
+                <span asp-validation-for="Provincia" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CodCircuito" class="control-label"></label>
-                <input asp-for="CodCircuito" class="form-control" />
-                <span asp-validation-for="CodCircuito" class="text-danger"></span>
+                <label asp-for="NoDistrito" class="control-label"></label>
+                <input asp-for="NoDistrito" class="form-control" />
+                <span asp-validation-for="NoDistrito" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DistritoId" class="control-label"></label>
-                <select asp-for="DistritoId" class="form-control" asp-items="ViewBag.DistritoId"></select>
-                <span asp-validation-for="DistritoId" class="text-danger"></span>
+                <label asp-for="Parroquia" class="control-label"></label>
+                <input asp-for="Parroquia" class="form-control" />
+                <span asp-validation-for="Parroquia" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="CodDistrito" class="control-label"></label>
+                <input asp-for="CodDistrito" class="form-control" />
+                <span asp-validation-for="CodDistrito" class="text-danger"></span>
+            </div>                    
+            
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="EsActivo" /> @Html.DisplayNameFor(model => model.EsActivo)
@@ -44,7 +49,7 @@
                 <span asp-validation-for="FechaCreacion" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
