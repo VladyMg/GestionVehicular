@@ -14,4 +14,6 @@ public class ApplicationDbContext : DbContext
     public DbSet<Distrito> Distritos { get; set; }
 
     public DbSet<Circuito> Circuitos { get; set; }
+
+    public DbSet<Subcircuito> Subcircuitos { get; set; }
 }
