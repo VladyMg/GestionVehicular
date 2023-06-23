@@ -13,5 +13,6 @@
         "aspnetcorerazor": {
             "parser": "plain"
         }
-    }
+    },
+    "dotnet.defaultSolution": "GestionVehicular.sln"
 }

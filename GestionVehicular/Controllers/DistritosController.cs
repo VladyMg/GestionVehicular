@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 namespace GestionVehicular.Controllers;
 
 public class DistritosController : Controller
-    {
-        
+{
+
     private readonly ApplicationDbContext _context;
 
     public DistritosController(ApplicationDbContext context)
@@ -18,7 +18,7 @@ public class DistritosController : Controller
         return View(await _context.Distritos.ToListAsync());
     }
 
-  // GET: Distrito/Details/5
+    // GET: Distrito/Details/5
     public async Task<IActionResult> Details(int? id)
     {
         if (id == null || _context.Distritos == null)
@@ -56,7 +56,7 @@ public class DistritosController : Controller
         }
         return View(distrito);
     }
-     // GET: Distrito/Edit/5
+    // GET: Distrito/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null || _context.Distritos == null)
