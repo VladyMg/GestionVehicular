@@ -1,5 +1,7 @@
 
 
+using System.ComponentModel;
+
 namespace GestionVehicular.Models;
 
 [Table("Usuario")]
@@ -47,6 +49,9 @@ public class Usuario
     [Required]
     public bool EsActivo { get; set; }
 
+    [Required]
+    public DateTime FechaCreacion { get; set; }
+
     [ForeignKey("Rol")]
     public int? RolId { get; set; }
     public virtual Role Rol { get; set; }
@@ -55,6 +60,5 @@ public class Usuario
     public int? SubcircuitoId { get; set; }
     public virtual Subcircuito Subcircuito { get; set; }
 
-    [Required]
-    public DateTime FechaCreacion { get; set; }
+
 }

@@ -27,6 +27,31 @@
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="#">Home</a>
                             </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Módulo de Distritos
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-item">
+                                        <a class="dropdown-item text-primary" asp-area="" asp-controller="Distritos"
+                                           asp-action="Index">Distritos</a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a class="dropdown-item text-primary" asp-area="" asp-controller="Circuitos"
+                                           asp-action="Index">Circuitos</a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a class="dropdown-item text-primary" asp-area="" asp-controller="Subcircuitos"
+                                           asp-action="Index">Subcircuitos</a>
+                                    </li>
+                                </ul>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link text-warning" asp-area="" asp-controller="Usuarios"
                                    asp-action="Index">Usuario</a>
@@ -34,14 +59,6 @@
                             <li class="nav-item">
                                 <a class="nav-link text-warning" asp-area="" asp-controller="Roles"
                                    asp-action="Index">Roles</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-warning" asp-area="" asp-controller="Distritos"
-                                   asp-action="Index">Distritos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-warning" asp-area="" asp-controller="Circuitos"
-                                   asp-action="Index">Circuitos</a>
                             </li>
                         </ul>
                     </div>
@@ -57,7 +74,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - Gestión Vehicular - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2023 - Gestión Vehicular
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

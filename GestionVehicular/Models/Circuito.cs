@@ -17,13 +17,18 @@ public class Circuito
     [MaxLength(50)]
     public string CodCircuito { get; set; }
 
-    [ForeignKey("Distrito")]
-    public int? DistritoId { get; set; }
-    public virtual Distrito Distrito { get; set; }
-
     [Required]
     public bool EsActivo { get; set; }
 
     [Required]
     public DateTime FechaCreacion { get; set; }
+
+    // Navigation Properties
+
+    [ForeignKey("Distrito")]
+    public int? DistritoId { get; set; }
+    public virtual Distrito Distrito { get; set; }
+
+    public virtual ICollection<Subcircuito> Subcircuitos { get; set; }
+
 }
