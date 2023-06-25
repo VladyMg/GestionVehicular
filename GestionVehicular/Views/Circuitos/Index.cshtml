@@ -4,62 +4,67 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Lista de Circuitos</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success">Nuevo Circuito</a>
 </p>
-<table class="table">
+<table class="table table-sm table-hover">
+    <thead class="table-primary">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Nombre)
+                    @Html.DisplayNameFor(model => model.Nombre)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NoCircuito)
+                    @Html.DisplayNameFor(model => model.NoCircuito)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CodCircuito)
+                    @Html.DisplayNameFor(model => model.CodCircuito)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Distrito)
+                    @Html.DisplayNameFor(model => model.Distrito)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EsActivo)
+                Activo
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaCreacion)
-            </th>
+            <th></th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NoCircuito)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CodCircuito)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Distrito.CodDistrito)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EsActivo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaCreacion)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CircuitoId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CircuitoId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CircuitoId">Delete</a>
-            </td>
-        </tr>
-}
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                        @Html.DisplayFor(modelItem => item.NoCircuito)
+                </td>
+                <td>
+                        @Html.DisplayFor(modelItem => item.CodCircuito)
+                </td>
+                <td>
+                        @Html.DisplayFor(modelItem => item.Distrito.CodDistrito)
+                </td>
+                <td>
+                        @{
+                            var activo = item.EsActivo ? "Si" : "No";
+                        }
+                        @activo
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.CircuitoId" class="btn btn-warning">Edit</a>
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.CircuitoId" class="btn btn-secondary">Details</a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.CircuitoId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+            }
     </tbody>
 </table>
