@@ -61,6 +61,8 @@ namespace GestionVehicular.Controllers
         {
             if (ModelState.IsValid)
             {
+                subcircuito.EsActivo = true;
+                subcircuito.FechaCreacion = DateTime.Now;
                 _context.Add(subcircuito);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -155,14 +157,14 @@ namespace GestionVehicular.Controllers
             {
                 _context.Subcircuito.Remove(subcircuito);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool SubcircuitoExists(int id)
         {
-          return _context.Subcircuito.Any(e => e.SubcircuitoId == id);
+            return _context.Subcircuito.Any(e => e.SubcircuitoId == id);
         }
     }
 }
