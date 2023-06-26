@@ -20,4 +20,6 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<GestionVehicular.Models.Vehiculo> Vehiculo { get; set; }
 
+    public DbSet<GestionVehicular.Models.TipoMantenimiento> TipoMantenimiento { get; set; }
+
 }

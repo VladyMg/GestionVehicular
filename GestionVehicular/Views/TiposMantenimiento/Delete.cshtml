@@ -1,14 +1,14 @@
-﻿@model GestionVehicular.Models.Role
+﻿@model GestionVehicular.Models.TipoMantenimiento
 
 @{
     ViewData["Title"] = "Delete";
 }
 
-<h1 class="text-secondary">Delete</h1>
+<h1 class="text-secondary">Eliminar</h1>
 
 <h3>¿Está seguro de quere eliminar éste registro?</h3>
 <div>
-    <h4 class="text-success">Rol</h4>
+    <h4 class="text-success">Tipo de Mantenimiento</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -27,15 +27,12 @@
             Fecha de Creación
         </dt>
         <dd class="col-sm-10">
-            @{
-                var fechaNacimiento = ((DateTime)Model.FechaCreacion).ToString("yyyy-MM-dd");
-            }
-            @fechaNacimiento
+            @Html.DisplayFor(model => model.FechaCreacion)
         </dd>
     </dl>
 
     <form asp-action="Delete">
-        <input type="hidden" asp-for="RolId" />
+        <input type="hidden" asp-for="TipoMantenimientoId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
     </form>

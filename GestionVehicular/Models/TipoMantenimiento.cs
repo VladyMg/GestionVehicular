@@ -1,6 +1,6 @@
 namespace GestionVehicular.Models;
 
-[Table("TipoMantenimiento")]
+[Table("TiposMantenimiento")]
 public class TipoMantenimiento
 {
     [Key]
