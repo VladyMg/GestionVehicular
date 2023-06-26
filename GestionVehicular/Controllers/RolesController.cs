@@ -50,6 +50,8 @@ public class RolesController : Controller
     {
         if (ModelState.IsValid)
         {
+            role.EsActivo = true;
+            role.FechaCreacion = DateTime.Now;
             _context.Add(role);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

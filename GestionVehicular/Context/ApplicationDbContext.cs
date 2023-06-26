@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using GestionVehicular.Models;
 
 namespace GestionVehiculos.Context;
 
@@ -15,5 +16,10 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<Circuito> Circuitos { get; set; }
 
-    public DbSet<Subcircuito> Subcircuitos { get; set; }
+    public DbSet<Subcircuito> Subcircuito { get; set; }
+
+    public DbSet<GestionVehicular.Models.Vehiculo> Vehiculo { get; set; }
+
+    public DbSet<GestionVehicular.Models.TipoMantenimiento> TipoMantenimiento { get; set; }
+
 }

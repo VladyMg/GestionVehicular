@@ -1,0 +1,90 @@
+﻿@model GestionVehicular.Models.Vehiculo
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1 class="text-secondary">Detalle</h1>
+
+<div>
+    <h4 class="text-success">Vehiculo</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Placa)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Placa)
+        </dd>
+        <dt class="col-sm-2">
+            Número de Chasis
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NumeroChasis)
+        </dd>
+        <dt class="col-sm-2">
+            Número de Motor
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NumeroMotor)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Modelo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Modelo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Marca)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Marca)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Kilometraje)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Kilometraje)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Cilindraje)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Cilindraje)
+        </dd>
+        <dt class="col-sm-2">
+            Capacidad de Carga
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CapacidadCarga)
+        </dd>
+        <dt class="col-sm-2">
+            Capacidad de Pasajeros
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CapacidadPasajero)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Subcircuito)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Subcircuito.CodSubcircuito)
+        </dd>
+        <dt class="col-sm-2">
+            Activo
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EsActivo)
+        </dd>
+        <dt class="col-sm-2">
+            Fecha de Creación
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FechaCreacion)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.VehiculoId" class="btn btn-warning">Editar</a> |
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</div>

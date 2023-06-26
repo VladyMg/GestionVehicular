@@ -4,19 +4,16 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1 class="text-secondary">Lista de Usuarios</h1>
 
 <p>
-    <a asp-action="Create" type="button" class="btn btn-danger">Nuevo Usuario</a>
+    <a asp-action="Create" type="button" class="btn btn-success">Nuevo Usuario</a>
 </p>
-<table class="table">
-    <thead>
+<table class="table table-sm">
+    <thead class="table-primary">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Cedula)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Contrasenia)
+                Cédula
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
@@ -25,22 +22,19 @@
                 @Html.DisplayNameFor(model => model.Apellido)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FechaNacimiento)
+                Fecha de Nacimiento
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TipoSangre)
+                Tipo de Sangre
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Telefono)
+                Teléfono
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CiudadNacimiento)
+                Cuidad de Nacimiento
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Rango)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EsActivo)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Rol)
@@ -49,59 +43,66 @@
                 @Html.DisplayNameFor(model => model.Subcircuito)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FechaCreacion)
+                Activo
             </th>
+            <th></th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cedula)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Contrasenia)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Apellido)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaNacimiento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoSangre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefono)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CiudadNacimiento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rango)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EsActivo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rol.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Subcircuito.CodSubcircuito)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaCreacion)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.UsuarioId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.UsuarioId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.UsuarioId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cedula)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apellido)
+                </td>
+                <td>
+                    @{
+                        var fechaNacimiento = ((DateTime)item.FechaNacimiento).ToString("yyyy-MM-dd");
+                    }
+                    @fechaNacimiento
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipoSangre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefono)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CiudadNacimiento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rango)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rol.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subcircuito.CodSubcircuito)
+                </td>
+                <td>
+                    @{
+                        var activo = item.EsActivo ? "Si" : "No";
+                    }
+                    @activo
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.UsuarioId" class="btn btn-warning">Edit</a>
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.UsuarioId" class="btn btn-secondary">Details</a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.UsuarioId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -1,0 +1,66 @@
+﻿@model GestionVehicular.Models.Subcircuito
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1 class="text-secondary">Editar</h1>
+
+<h4 class="text-success">Subcircuito</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SubcircuitoId" />
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NoSubcircuito" class="control-label"></label>
+                <input asp-for="NoSubcircuito" class="form-control" />
+                <span asp-validation-for="NoSubcircuito" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CodSubcircuito" class="control-label"></label>
+                <input asp-for="CodSubcircuito" class="form-control" />
+                <span asp-validation-for="CodSubcircuito" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CircuitoId" class="control-label">Circuito</label>
+                <select asp-for="CircuitoId" class="form-control" asp-items="ViewBag.CircuitoId"></select>
+                <span asp-validation-for="CircuitoId" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="EsActivo" /> Activo
+                </label>
+            </div>
+            <div class="form-group" style="display:none">
+                <label asp-for="FechaCreacion" class="control-label"></label>
+                <input asp-for="FechaCreacion" class="form-control" />
+                <span asp-validation-for="FechaCreacion" class="text-danger"></span>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <input type="submit" value="Actualizar" class="btn btn-warning" />
+                    </div>
+                </div>
+                <div class="col-3">
+                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

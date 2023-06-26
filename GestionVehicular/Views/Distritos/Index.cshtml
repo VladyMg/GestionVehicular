@@ -4,13 +4,13 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1 class="text-secondary">Lista de Distritos</h1>
 
 <p>
-    <a asp-action="Create" type="button" class="btn btn-danger">Nuevo Distrito</a>
+    <a asp-action="Create" class="btn btn-success">Nuevo Distrito</a>
 </p>
-<table class="table">
-    <thead>
+<table class="table table-sm table-hover">
+    <thead class="table-primary">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
@@ -28,44 +28,48 @@
                 @Html.DisplayNameFor(model => model.CodDistrito)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EsActivo)
+                Activo
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaCreacion)
-            </th>
+            <th></th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Provincia)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NoDistrito)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Parroquia)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CodDistrito)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EsActivo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaCreacion)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.DistritoId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.DistritoId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.DistritoId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Provincia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NoDistrito)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Parroquia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CodDistrito)
+                </td>
+                <td>
+                    @{
+                        var activo = item.EsActivo ? "Si" : "No";
+                    }
+                    @activo
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.DistritoId" class="btn btn-warning">Edit</a>
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.DistritoId" class="btn btn-secondary">Details</a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.DistritoId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
