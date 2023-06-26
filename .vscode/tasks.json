@@ -85,7 +85,10 @@
                         "hostPort": 4090,
                         "containerPort": 80
                     }
-                ]
+                ],
+                "env": {
+                    "ConnectionStrings__DefaultConnection": "Server=GestionVehicularMssql;Database=GestionVehicularDB;User Id=sa;Password=GestionVehicularDB123;TrustServerCertificate=true;"
+                }
             },
             "netCore": {
                 "appProject": "${workspaceFolder}/GestionVehicular/GestionVehicular.csproj",
