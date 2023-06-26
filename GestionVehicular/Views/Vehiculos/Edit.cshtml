@@ -1,0 +1,97 @@
+﻿@model GestionVehicular.Models.Vehiculo
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1 class="text-secondary">Editar</h1>
+
+<h4 class="text-success">Vehiculo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="VehiculoId" />
+            <div class="form-group">
+                <label asp-for="Placa" class="control-label"></label>
+                <input asp-for="Placa" class="form-control" />
+                <span asp-validation-for="Placa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumeroChasis" class="control-label">Número de Chasis</label>
+                <input asp-for="NumeroChasis" class="form-control" />
+                <span asp-validation-for="NumeroChasis" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumeroMotor" class="control-label">Número de Motor</label>
+                <input asp-for="NumeroMotor" class="form-control" />
+                <span asp-validation-for="NumeroMotor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Modelo" class="control-label"></label>
+                <input asp-for="Modelo" class="form-control" />
+                <span asp-validation-for="Modelo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Marca" class="control-label"></label>
+                <input asp-for="Marca" class="form-control" />
+                <span asp-validation-for="Marca" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Kilometraje" class="control-label"></label>
+                <input asp-for="Kilometraje" class="form-control" />
+                <span asp-validation-for="Kilometraje" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cilindraje" class="control-label"></label>
+                <input asp-for="Cilindraje" class="form-control" />
+                <span asp-validation-for="Cilindraje" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CapacidadCarga" class="control-label">Capacidad de Carga</label>
+                <input asp-for="CapacidadCarga" class="form-control" />
+                <span asp-validation-for="CapacidadCarga" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CapacidadPasajero" class="control-label">Capacidad de Pasajero</label>
+                <input asp-for="CapacidadPasajero" class="form-control" />
+                <span asp-validation-for="CapacidadPasajero" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SubcircuitoId" class="control-label">Subcircuito</label>
+                <select asp-for="SubcircuitoId" class="form-control" asp-items="ViewBag.SubcircuitoId"></select>
+                <span asp-validation-for="SubcircuitoId" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="EsActivo" /> @Html.DisplayNameFor(model => model.EsActivo)
+                </label>
+            </div>
+            <div class="form-group" style="display:none">
+                <label asp-for="FechaCreacion" class="control-label"></label>
+                <input asp-for="FechaCreacion" class="form-control" />
+                <span asp-validation-for="FechaCreacion" class="text-danger"></span>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <input type="submit" value="Actualizar" class="btn btn-warning" />
+                    </div>
+                </div>
+                <div class="col-3">
+                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

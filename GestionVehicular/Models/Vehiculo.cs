@@ -44,10 +44,18 @@ public class Vehiculo
     [Required]
     public bool EsActivo { get; set; }
 
+    [Required]
+    public DateTime FechaCreacion { get; set; }
+
+    // Navigation properties
     [ForeignKey("Subcircuito")]
     public int? SubcircuitoId { get; set; }
     public virtual Subcircuito Subcircuito { get; set; }
 
-    [Required]
-    public DateTime FechaCreacion { get; set; }
+    public virtual ICollection<Mantenimiento> Mantenimientos { get; set; }
+
+    public virtual ICollection<ParteNovedad> ParteNovedades { get; set; }
+
+    public virtual ICollection<Movilizacion> Movilizaciones { get; set; }
+
 }

@@ -25,7 +25,8 @@
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                <a class="nav-link text-warning" asp-area="" asp-controller="Home"
+                                   asp-action="Index">Home</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -52,14 +53,42 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-warning" asp-area="" asp-controller="Roles"
-                                   asp-action="Index">Roles</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Módulo de Administración
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-item">
+                                        <a class="nav-link text-primary" asp-area="" asp-controller="Roles"
+                                           asp-action="Index">Roles</a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a class="nav-link text-primary" asp-area="" asp-controller="Usuarios"
+                                           asp-action="Index">Usuarios</a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a class="nav-link text-primary" asp-area="" asp-controller="Vehiculos"
+                                           asp-action="Index">Vehículos</a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a class="nav-link text-primary" asp-area="" asp-controller="TipoMantenimientos"
+                                           asp-action="Index">Tipos de Mantenimiento</a>
+                                    </li>
+                                </ul>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-warning" asp-area="" asp-controller="Usuarios"
-                                   asp-action="Index">Usuario</a>
-                            </li>
+                            @*<li class="nav-item">
+                            <a class="nav-link text-warning" asp-area="" asp-controller="Vehiculos"
+                            asp-action="Index">Vehículos</a>
+                            </li>*@
                         </ul>
                     </div>
                 </div>
