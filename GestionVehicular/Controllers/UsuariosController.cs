@@ -43,7 +43,7 @@ public class UsuariosController : Controller
     public IActionResult Create()
     {
         ViewData["RolId"] = new SelectList(_context.Roles, "RolId", "Nombre");
-        ViewData["SubcircuitoId"] = new SelectList(_context.Set<Subcircuito>(), "SubcircuitoId", "CodSubcircuito");
+        ViewData["SubcircuitoId"] = new SelectList(_context.Set<Subcircuito>(), "SubcircuitoId", "Nombre");
         return View();
     }
 
@@ -81,7 +81,7 @@ public class UsuariosController : Controller
             return NotFound();
         }
         ViewData["RolId"] = new SelectList(_context.Roles, "RolId", "Nombre", usuario.RolId);
-        ViewData["SubcircuitoId"] = new SelectList(_context.Set<Subcircuito>(), "SubcircuitoId", "CodSubcircuito", usuario.SubcircuitoId);
+        ViewData["SubcircuitoId"] = new SelectList(_context.Set<Subcircuito>(), "SubcircuitoId", "Nombre", usuario.SubcircuitoId);
         return View(usuario);
     }
 
