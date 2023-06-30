@@ -70,7 +70,19 @@
             </div>
             <div class="form-group">
                 <label asp-for="Rango" class="control-label"></label>
-                <input asp-for="Rango" class="form-control" />
+                @Html.DropDownListFor(
+                model => model.Rango,
+                new SelectList(new[]
+                {
+                new SelectListItem { Value = "Sargento Primero", Text = "Sargento Primero" },
+                new SelectListItem { Value = "Sargento Segundo", Text = "Sargento Segundo" },
+                new SelectListItem { Value = "Cabo Primero", Text = "Cabo Primero" },
+                new SelectListItem { Value = "Cabo Segundo", Text = "Cabo Segundo" },
+                new SelectListItem { Value = "Policía", Text = "Policía" },
+                }, "Value", "Text"),
+                "Selecciona el Rango",
+                new { @class = "form-control" }
+                )
                 <span asp-validation-for="Rango" class="text-danger"></span>
             </div>
             <div class="form-group">
