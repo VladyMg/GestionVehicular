@@ -39,9 +39,25 @@
             </div>
             <div class="form-group">
                 <label asp-for="TipoSangre" class="control-label">Tipo de Sangre</label>
-                <input asp-for="TipoSangre" class="form-control" />
+                @Html.DropDownListFor(
+                model => model.TipoSangre,
+                new SelectList(new[]
+                {
+                new SelectListItem { Value = "A+", Text = "A+" },
+                new SelectListItem { Value = "A-", Text = "A-" },
+                new SelectListItem { Value = "B+", Text = "B+" },
+                new SelectListItem { Value = "B-", Text = "B-" },
+                new SelectListItem { Value = "AB+", Text = "AB+" },
+                new SelectListItem { Value = "AB-", Text = "AB-" },
+                new SelectListItem { Value = "O+", Text = "O+" },
+                new SelectListItem { Value = "O-", Text = "O-" }
+                }, "Value", "Text"),
+                "Selecciona el tipo de sangre",
+                new { @class = "form-control" }
+                )
                 <span asp-validation-for="TipoSangre" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Telefono" class="control-label"></label>
                 <input asp-for="Telefono" class="form-control" />
