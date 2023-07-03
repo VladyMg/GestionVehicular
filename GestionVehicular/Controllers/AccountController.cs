@@ -1,6 +1,7 @@
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace GestionVehiculos.Controllers;
@@ -28,14 +29,18 @@ public class AccountController : Controller
         // Implementar lógica de autenticación
         if (ValidarCredenciales(user.Cedula, user.Contrasenia))
         {
+            var userInt = _context.Usuarios
+                .Include(u => u.Rol)
+                .FirstOrDefault(u => u.Cedula == user.Cedula);
+
             //AUTENTIFICACION
             ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
             //TODO USUARIO PUEDE CONTENER UNA SERIE DE CARACTERISTICAS
             //LLAMADA CLAIMS.  DICHAS CARACTERISTICAS PODEMOS ALMACENARLAS
             //DENTRO DE USER PARA UTILIZARLAS A LO LARGO DE LA APP
-            Claim claimCedula = new Claim("cedula", user.Cedula);
-
-            identity.AddClaim(claimCedula);
+            identity.AddClaim(new Claim("cedula", userInt.Cedula));
+            identity.AddClaim(new Claim(ClaimTypes.Name, $"{userInt.Nombre} {userInt.Apellido}"));
+            identity.AddClaim(new Claim(ClaimTypes.Role, userInt.Rol.Nombre));
 
             ClaimsPrincipal userPrincipal = new ClaimsPrincipal(identity);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, userPrincipal, new AuthenticationProperties
@@ -66,6 +71,14 @@ public class AccountController : Controller
         }
 
         return false;
+    }
+
+    // Todo: create logout action
+    [HttpPost]
+    public async Task<IActionResult> Logout()
+    {
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        return RedirectToAction("Login", "Account");
     }
 
 }

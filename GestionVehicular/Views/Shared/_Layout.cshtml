@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims;
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -9,6 +10,10 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GestionVehiculos.styles.css" asp-append-version="true" />
 </head>
+
+@{
+    string role = User.FindFirstValue(ClaimTypes.Role);
+}
 
 <body>
     <header>
@@ -28,99 +33,113 @@
                                 <a class="nav-link text-warning" asp-area="" asp-controller="Home"
                                    asp-action="Index">Home</a>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Módulo de Distritos
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="dropdown-item">
-                                        <a class="dropdown-item text-primary" asp-area="" asp-controller="Distritos"
+                            @if (role == "Administrador")
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Módulo de Distritos
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown-item">
+                                            <a class="dropdown-item text-primary" asp-area="" asp-controller="Distritos"
                                            asp-action="Index">Distritos</a>
-                                    </li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li class="dropdown-item">
-                                        <a class="dropdown-item text-primary" asp-area="" asp-controller="Circuitos"
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <a class="dropdown-item text-primary" asp-area="" asp-controller="Circuitos"
                                            asp-action="Index">Circuitos</a>
-                                    </li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li class="dropdown-item">
-                                        <a class="dropdown-item text-primary" asp-area="" asp-controller="Subcircuitos"
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <a class="dropdown-item text-primary" asp-area="" asp-controller="Subcircuitos"
                                            asp-action="Index">Subcircuitos</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Módulo de Solicitudes
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="dropdown-item">
-                                        <a class="nav-link text-primary" asp-area="" asp-controller="Mantenimientos"
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+                            @if (role == "Administrador" || role == "Técnico 1" || role == "Técnico 2")
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Módulo de Solicitudes
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown-item">
+                                            <a class="nav-link text-primary" asp-area="" asp-controller="Mantenimientos"
                                            asp-action="Index">Mantenimientos</a>
-                                    </li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li class="dropdown-item">
-                                        <a class="nav-link text-primary" asp-area="" asp-controller="ParteNovedades"
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <a class="nav-link text-primary" asp-area="" asp-controller="ParteNovedades"
                                            asp-action="Index">Partes</a>
-                                    </li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li class="dropdown-item">
-                                        <a class="nav-link text-primary" asp-area="" asp-controller="Abastecimientos"
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <a class="nav-link text-primary" asp-area="" asp-controller="Abastecimientos"
                                            asp-action="Index">Abastecimientos</a>
-                                    </li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li class="dropdown-item">
-                                        <a class="nav-link text-primary" asp-area="" asp-controller="Movilizaciones"
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <a class="nav-link text-primary" asp-area="" asp-controller="Movilizaciones"
                                            asp-action="Index">Movilizaciones</a>
-                                    </li>
-                                    <li class="dropdown-item">
-                                        <a class="nav-link text-primary" asp-area="" asp-controller="Movilizaciones"
+                                        </li>
+                                        @if (role == "Administrador" || role == "Técnico 2")
+                                        {
+                                            <li class="dropdown-item">
+                                                <a class="nav-link text-primary" asp-area="" asp-controller="Movilizaciones"
                                            asp-action="Index">Aprobaciones</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Módulo de Administración
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="dropdown-item">
-                                        <a class="nav-link text-primary" asp-area="" asp-controller="Roles"
+                                            </li>
+                                        }
+                                    </ul>
+                                </li>
+                            }
+
+                            @if (role == "Administrador")
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Módulo de Administración
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown-item">
+                                            <a class="nav-link text-primary" asp-area="" asp-controller="Roles"
                                            asp-action="Index">Roles</a>
-                                    </li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li class="dropdown-item">
-                                        <a class="nav-link text-primary" asp-area="" asp-controller="Usuarios"
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <a class="nav-link text-primary" asp-area="" asp-controller="Usuarios"
                                            asp-action="Index">Usuarios</a>
-                                    </li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li class="dropdown-item">
-                                        <a class="nav-link text-primary" asp-area="" asp-controller="Vehiculos"
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <a class="nav-link text-primary" asp-area="" asp-controller="Vehiculos"
                                            asp-action="Index">Vehículos</a>
-                                    </li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li class="dropdown-item">
-                                        <a class="nav-link text-primary" asp-area="" asp-controller="TiposMantenimiento"
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <a class="nav-link text-primary" asp-area="" asp-controller="TiposMantenimiento"
                                            asp-action="Index">Tipos de Mantenimiento</a>
-                                    </li>
-                                </ul>
-                            </li>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+
                             @*<li class="nav-item">
                             <a class="nav-link text-warning" asp-area="" asp-controller="Vehiculos"
                             asp-action="Index">Vehículos</a>
@@ -128,6 +147,11 @@
                         </ul>
                     </div>
                 </div>
+                <form id="logoutForm" asp-controller="Account" asp-action="Logout" method="post">
+                    <button class="btn btn-outline-warning">
+                        Sign out
+                    </button>
+                </form>
             </div>
         </nav>
     </header>
