@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GestionVehicular.Controllers;
 
+[Authorize]
 public class UsuariosController : Controller
 {
     private readonly ApplicationDbContext _context;
