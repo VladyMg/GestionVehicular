@@ -103,6 +103,7 @@ public class UsuariosController : Controller
         {
             try
             {
+                usuario.Contrasenia = BCrypt.Net.BCrypt.HashPassword(usuario.Contrasenia);
                 _context.Update(usuario);
                 await _context.SaveChangesAsync();
             }
