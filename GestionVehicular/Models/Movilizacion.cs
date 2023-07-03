@@ -1,6 +1,6 @@
 namespace GestionVehicular.Models;
 
-
+[Table("Movilizacion")]
 public class Movilizacion
 {
     [Key]

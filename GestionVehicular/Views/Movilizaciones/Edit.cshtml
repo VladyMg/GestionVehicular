@@ -1,0 +1,79 @@
+﻿@model GestionVehicular.Models.Movilizacion
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Movilizacion</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MovilizacionId" />
+            <div class="form-group">
+                <label asp-for="Fecha" class="control-label"></label>
+                <input asp-for="Fecha" class="form-control" />
+                <span asp-validation-for="Fecha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HoraSalida" class="control-label"></label>
+                <input asp-for="HoraSalida" class="form-control" />
+                <span asp-validation-for="HoraSalida" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HoraLlegada" class="control-label"></label>
+                <input asp-for="HoraLlegada" class="form-control" />
+                <span asp-validation-for="HoraLlegada" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KilometrosSalida" class="control-label"></label>
+                <input asp-for="KilometrosSalida" class="form-control" />
+                <span asp-validation-for="KilometrosSalida" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KilometrajeLlegada" class="control-label"></label>
+                <input asp-for="KilometrajeLlegada" class="form-control" />
+                <span asp-validation-for="KilometrajeLlegada" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Observacion" class="control-label"></label>
+                <input asp-for="Observacion" class="form-control" />
+                <span asp-validation-for="Observacion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UsuarioId" class="control-label"></label>
+                <select asp-for="UsuarioId" class="form-control" asp-items="ViewBag.UsuarioId"></select>
+                <span asp-validation-for="UsuarioId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VehiculoId" class="control-label"></label>
+                <select asp-for="VehiculoId" class="form-control" asp-items="ViewBag.VehiculoId"></select>
+                <span asp-validation-for="VehiculoId" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="EsActivo" /> @Html.DisplayNameFor(model => model.EsActivo)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaCreacion" class="control-label"></label>
+                <input asp-for="FechaCreacion" class="form-control" />
+                <span asp-validation-for="FechaCreacion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
