@@ -65,6 +65,8 @@ namespace GestionVehicular.Controllers
         {
             if (ModelState.IsValid)
             {
+                mantenimiento.EsActivo = true;
+                mantenimiento.FechaCreacion = DateTime.Now;
                 _context.Add(mantenimiento);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -167,14 +169,14 @@ namespace GestionVehicular.Controllers
             {
                 _context.Mantenimientos.Remove(mantenimiento);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MantenimientoExists(int id)
         {
-          return _context.Mantenimientos.Any(e => e.MantenimientoId == id);
+            return _context.Mantenimientos.Any(e => e.MantenimientoId == id);
         }
     }
 }
