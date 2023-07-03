@@ -1,7 +1,3 @@
-
-
-using System.ComponentModel;
-
 namespace GestionVehicular.Models;
 
 [Table("Usuario")]
