@@ -1,0 +1,88 @@
+﻿@model GestionVehicular.Models.Abastecimiento
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1 class="text-secondary">Editar</h1>
+
+<h4 class="text-success">Abastecimiento</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AbastecimientoId" />
+            <div class="form-group">
+                <label asp-for="Fecha" class="control-label"></label>
+                <input asp-for="Fecha" class="form-control" />
+                <span asp-validation-for="Fecha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gasolinera" class="control-label"></label>
+                <input asp-for="Gasolinera" class="form-control" />
+                <span asp-validation-for="Gasolinera" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HoraLlegada" class="control-label">Hora de Llegada</label>
+                <input asp-for="HoraLlegada" class="form-control" />
+                <span asp-validation-for="HoraLlegada" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HoraSalida" class="control-label">Hora de Salida</label>
+                <input asp-for="HoraSalida" class="form-control" />
+                <span asp-validation-for="HoraSalida" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Combustible" class="control-label"></label>
+                <input asp-for="Combustible" class="form-control" />
+                <span asp-validation-for="Combustible" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KilometrosSalida" class="control-label">Kilimetros de Salida</label>
+                <input asp-for="KilometrosSalida" class="form-control" />
+                <span asp-validation-for="KilometrosSalida" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UsuarioId" class="control-label">Usuario</label>
+                <select asp-for="UsuarioId" class="form-control" asp-items="ViewBag.UsuarioId"></select>
+                <span asp-validation-for="UsuarioId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VehiculoId" class="control-label">Vehículo</label>
+                <select asp-for="VehiculoId" class="form-control" asp-items="ViewBag.VehiculoId"></select>
+                <span asp-validation-for="VehiculoId" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="EsActivo" /> Activo
+                </label>
+            </div>
+            <div class="form-group" style="display:none;">
+                <label asp-for="FechaCreacion" class="control-label"></label>
+                <input asp-for="FechaCreacion" class="form-control" />
+                <span asp-validation-for="FechaCreacion" class="text-danger"></span>
+            </div>
+
+            <hr />
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </div>
+                <div class="col-3">
+                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

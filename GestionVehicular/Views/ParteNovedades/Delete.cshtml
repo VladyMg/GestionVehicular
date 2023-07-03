@@ -1,0 +1,57 @@
+﻿@model GestionVehicular.Models.ParteNovedad
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1 class="text-secondary">Delete</h1>
+
+<h3>¿Está seguro de quere eliminar éste registro?</h3>
+<div>
+    <h4 class="text-success">Parte Novedad</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nota)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nota)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Usuario)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Usuario.Nombre) @Html.DisplayFor(model => model.Usuario.Apellido)
+        </dd>
+        <dt class="col-sm-2">
+            Vehículo
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Vehiculo.Placa)
+        </dd>
+        <dt class="col-sm-2">
+            Activo
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EsActivo)
+        </dd>
+        <dt class="col-sm-2">
+            Fecha de Creación
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FechaCreacion)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ParteNovedadId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>

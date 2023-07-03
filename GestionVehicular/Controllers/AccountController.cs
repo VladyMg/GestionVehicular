@@ -1,5 +1,7 @@
 
 using System.Security.Claims;
+using Azure.Core;
+using GestionVehicular.Helpers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
@@ -50,7 +52,8 @@ public class AccountController : Controller
         }
 
         // Credenciales inválidas
-        ModelState.AddModelError("", "Las credenciales de inicio de sesión son inválidas.");
+        ViewData["ErrorMessage"] = "Las credenciales de inicio de sesión son inválidas.";
+
         return View("Login");
     }
 
@@ -60,7 +63,7 @@ public class AccountController : Controller
         var usuario = _context.Usuarios.FirstOrDefault(u => u.Cedula == cedula);
 
         // Verificar si el usuario existe y si la contraseña es correcta
-        if (usuario != null && usuario.Contrasenia == contrasenia)
+        if (usuario != null && BCrypt.Net.BCrypt.Verify(contrasenia.Trim(), usuario.Contrasenia))
         {
             return true;
         }

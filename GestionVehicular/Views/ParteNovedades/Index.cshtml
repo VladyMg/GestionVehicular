@@ -1,0 +1,75 @@
+﻿@model IEnumerable<GestionVehicular.Models.ParteNovedad>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-secondary">Lista de Parte Novedades</h1>
+
+<p>
+    <a asp-action="Create" type="button" class="btn btn-success">Nuevo Parte Novedad</a>
+</p>
+<table class="table table-sm">
+    <thead class="table-primary">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nota)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Usuario)
+            </th>
+            <th>
+                Vehículo
+            </th>
+            <th>
+                Activo
+            </th>
+            <th>
+                Fecha
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nota)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Usuario.Nombre) @Html.DisplayFor(modelItem => item.Usuario.Apellido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vehiculo.Placa)
+                </td>
+                <td>
+                    @{
+                        var activo = item.EsActivo ? "Si" : "No";
+                    }
+                    @activo
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaCreacion)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ParteNovedadId" class="btn btn-warning">Edit</a>
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.ParteNovedadId" class="btn btn-secondary">Details</a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.ParteNovedadId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

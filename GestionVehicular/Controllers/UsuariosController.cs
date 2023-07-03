@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using GestionVehicular.Helpers;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace GestionVehicular.Controllers;
@@ -48,7 +49,7 @@ public class UsuariosController : Controller
     }
 
     // POST: Usuarios/Create
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // To protect from over posting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
@@ -58,6 +59,7 @@ public class UsuariosController : Controller
         {
             usuario.EsActivo = true;
             usuario.FechaCreacion = DateTime.Now;
+            usuario.Contrasenia = BCrypt.Net.BCrypt.HashPassword(usuario.Contrasenia);
             _context.Add(usuario);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -101,6 +103,7 @@ public class UsuariosController : Controller
         {
             try
             {
+                usuario.Contrasenia = BCrypt.Net.BCrypt.HashPassword(usuario.Contrasenia);
                 _context.Update(usuario);
                 await _context.SaveChangesAsync();
             }

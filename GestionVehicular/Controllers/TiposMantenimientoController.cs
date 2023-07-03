@@ -22,18 +22,18 @@ namespace GestionVehicular.Controllers
         // GET: TiposMantenimiento
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TipoMantenimiento.ToListAsync());
+            return View(await _context.TiposMantenimiento.ToListAsync());
         }
 
         // GET: TiposMantenimiento/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.TipoMantenimiento == null)
+            if (id == null || _context.TiposMantenimiento == null)
             {
                 return NotFound();
             }
 
-            var tipoMantenimiento = await _context.TipoMantenimiento
+            var tipoMantenimiento = await _context.TiposMantenimiento
                 .FirstOrDefaultAsync(m => m.TipoMantenimientoId == id);
             if (tipoMantenimiento == null)
             {
@@ -70,12 +70,12 @@ namespace GestionVehicular.Controllers
         // GET: TiposMantenimiento/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.TipoMantenimiento == null)
+            if (id == null || _context.TiposMantenimiento == null)
             {
                 return NotFound();
             }
 
-            var tipoMantenimiento = await _context.TipoMantenimiento.FindAsync(id);
+            var tipoMantenimiento = await _context.TiposMantenimiento.FindAsync(id);
             if (tipoMantenimiento == null)
             {
                 return NotFound();
@@ -121,12 +121,12 @@ namespace GestionVehicular.Controllers
         // GET: TiposMantenimiento/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.TipoMantenimiento == null)
+            if (id == null || _context.TiposMantenimiento == null)
             {
                 return NotFound();
             }
 
-            var tipoMantenimiento = await _context.TipoMantenimiento
+            var tipoMantenimiento = await _context.TiposMantenimiento
                 .FirstOrDefaultAsync(m => m.TipoMantenimientoId == id);
             if (tipoMantenimiento == null)
             {
@@ -141,14 +141,14 @@ namespace GestionVehicular.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.TipoMantenimiento == null)
+            if (_context.TiposMantenimiento == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.TipoMantenimiento'  is null.");
             }
-            var tipoMantenimiento = await _context.TipoMantenimiento.FindAsync(id);
+            var tipoMantenimiento = await _context.TiposMantenimiento.FindAsync(id);
             if (tipoMantenimiento != null)
             {
-                _context.TipoMantenimiento.Remove(tipoMantenimiento);
+                _context.TiposMantenimiento.Remove(tipoMantenimiento);
             }
 
             await _context.SaveChangesAsync();
@@ -157,7 +157,7 @@ namespace GestionVehicular.Controllers
 
         private bool TipoMantenimientoExists(int id)
         {
-            return _context.TipoMantenimiento.Any(e => e.TipoMantenimientoId == id);
+            return _context.TiposMantenimiento.Any(e => e.TipoMantenimientoId == id);
         }
     }
 }

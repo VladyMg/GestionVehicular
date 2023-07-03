@@ -22,19 +22,19 @@ namespace GestionVehicular.Controllers
         // GET: Vehiculos
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Vehiculo.Include(v => v.Subcircuito);
+            var applicationDbContext = _context.Vehiculos.Include(v => v.Subcircuito);
             return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Vehiculos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Vehiculo == null)
+            if (id == null || _context.Vehiculos == null)
             {
                 return NotFound();
             }
 
-            var vehiculo = await _context.Vehiculo
+            var vehiculo = await _context.Vehiculos
                 .Include(v => v.Subcircuito)
                 .FirstOrDefaultAsync(m => m.VehiculoId == id);
             if (vehiculo == null)
@@ -48,7 +48,7 @@ namespace GestionVehicular.Controllers
         // GET: Vehiculos/Create
         public IActionResult Create()
         {
-            ViewData["SubcircuitoId"] = new SelectList(_context.Subcircuito, "SubcircuitoId", "CodSubcircuito");
+            ViewData["SubcircuitoId"] = new SelectList(_context.Subcircuitos, "SubcircuitoId", "CodSubcircuito");
             return View();
         }
 
@@ -67,24 +67,24 @@ namespace GestionVehicular.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SubcircuitoId"] = new SelectList(_context.Subcircuito, "SubcircuitoId", "CodSubcircuito", vehiculo.SubcircuitoId);
+            ViewData["SubcircuitoId"] = new SelectList(_context.Subcircuitos, "SubcircuitoId", "CodSubcircuito", vehiculo.SubcircuitoId);
             return View(vehiculo);
         }
 
         // GET: Vehiculos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Vehiculo == null)
+            if (id == null || _context.Vehiculos == null)
             {
                 return NotFound();
             }
 
-            var vehiculo = await _context.Vehiculo.FindAsync(id);
+            var vehiculo = await _context.Vehiculos.FindAsync(id);
             if (vehiculo == null)
             {
                 return NotFound();
             }
-            ViewData["SubcircuitoId"] = new SelectList(_context.Subcircuito, "SubcircuitoId", "CodSubcircuito", vehiculo.SubcircuitoId);
+            ViewData["SubcircuitoId"] = new SelectList(_context.Subcircuitos, "SubcircuitoId", "CodSubcircuito", vehiculo.SubcircuitoId);
             return View(vehiculo);
         }
 
@@ -120,19 +120,19 @@ namespace GestionVehicular.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SubcircuitoId"] = new SelectList(_context.Subcircuito, "SubcircuitoId", "CodSubcircuito", vehiculo.SubcircuitoId);
+            ViewData["SubcircuitoId"] = new SelectList(_context.Subcircuitos, "SubcircuitoId", "CodSubcircuito", vehiculo.SubcircuitoId);
             return View(vehiculo);
         }
 
         // GET: Vehiculos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Vehiculo == null)
+            if (id == null || _context.Vehiculos == null)
             {
                 return NotFound();
             }
 
-            var vehiculo = await _context.Vehiculo
+            var vehiculo = await _context.Vehiculos
                 .Include(v => v.Subcircuito)
                 .FirstOrDefaultAsync(m => m.VehiculoId == id);
             if (vehiculo == null)
@@ -148,14 +148,14 @@ namespace GestionVehicular.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Vehiculo == null)
+            if (_context.Vehiculos == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Vehiculo'  is null.");
             }
-            var vehiculo = await _context.Vehiculo.FindAsync(id);
+            var vehiculo = await _context.Vehiculos.FindAsync(id);
             if (vehiculo != null)
             {
-                _context.Vehiculo.Remove(vehiculo);
+                _context.Vehiculos.Remove(vehiculo);
             }
 
             await _context.SaveChangesAsync();
@@ -164,7 +164,7 @@ namespace GestionVehicular.Controllers
 
         private bool VehiculoExists(int id)
         {
-            return _context.Vehiculo.Any(e => e.VehiculoId == id);
+            return _context.Vehiculos.Any(e => e.VehiculoId == id);
         }
     }
 }

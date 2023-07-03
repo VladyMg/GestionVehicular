@@ -1,6 +1,6 @@
 namespace GestionVehicular.Models;
 
-
+[Table("Abastecimiento")]
 public class Abastecimiento
 {
     [Key]
