@@ -49,8 +49,8 @@ public class AbastecimientosController : Controller
     // GET: Abastecimientos/Create
     public IActionResult Create()
     {
-        ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Apellido");
-        ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "CapacidadCarga");
+        ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Cedula");
+        ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "Placa");
         return View();
     }
 
@@ -69,8 +69,8 @@ public class AbastecimientosController : Controller
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Apellido", abastecimiento.UsuarioId);
-        ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "CapacidadCarga", abastecimiento.VehiculoId);
+        ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Cedula", abastecimiento.UsuarioId);
+        ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "Placa", abastecimiento.VehiculoId);
         return View(abastecimiento);
     }
 
@@ -87,8 +87,8 @@ public class AbastecimientosController : Controller
         {
             return NotFound();
         }
-        ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Apellido", abastecimiento.UsuarioId);
-        ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "CapacidadCarga", abastecimiento.VehiculoId);
+        ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Cedula", abastecimiento.UsuarioId);
+        ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "Placa", abastecimiento.VehiculoId);
         return View(abastecimiento);
     }
 
@@ -124,8 +124,8 @@ public class AbastecimientosController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Apellido", abastecimiento.UsuarioId);
-        ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "CapacidadCarga", abastecimiento.VehiculoId);
+        ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Cedula", abastecimiento.UsuarioId);
+        ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "Placa", abastecimiento.VehiculoId);
         return View(abastecimiento);
     }
 
