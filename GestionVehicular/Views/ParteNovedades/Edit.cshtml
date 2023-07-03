@@ -4,9 +4,9 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1 class="text-secondary">Editar</h1>
 
-<h4>ParteNovedad</h4>
+<h4 class="text-success">Parte Novedad</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -24,36 +24,44 @@
                 <span asp-validation-for="Nota" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UsuarioId" class="control-label"></label>
+                <label asp-for="UsuarioId" class="control-label">Responsable</label>
                 <select asp-for="UsuarioId" class="form-control" asp-items="ViewBag.UsuarioId"></select>
                 <span asp-validation-for="UsuarioId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="VehiculoId" class="control-label"></label>
+                <label asp-for="VehiculoId" class="control-label">Vehículo</label>
                 <select asp-for="VehiculoId" class="form-control" asp-items="ViewBag.VehiculoId"></select>
                 <span asp-validation-for="VehiculoId" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="EsActivo" /> @Html.DisplayNameFor(model => model.EsActivo)
+                    <input class="form-check-input" asp-for="EsActivo" /> Activo
                 </label>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display:none;">
                 <label asp-for="FechaCreacion" class="control-label"></label>
                 <input asp-for="FechaCreacion" class="form-control" />
                 <span asp-validation-for="FechaCreacion" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <hr />
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <input type="submit" value="Actualizar" class="btn btn-warning" />
+                    </div>
+                </div>
+                <div class="col-3">
+                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                </div>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

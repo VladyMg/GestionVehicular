@@ -49,8 +49,8 @@ namespace GestionVehicular.Controllers
         // GET: ParteNovedades/Create
         public IActionResult Create()
         {
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Apellido");
-            ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "CapacidadCarga");
+            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Cedula");
+            ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "Placa");
             return View();
         }
 
@@ -63,12 +63,14 @@ namespace GestionVehicular.Controllers
         {
             if (ModelState.IsValid)
             {
+                parteNovedad.FechaCreacion = DateTime.Now;
+                parteNovedad.EsActivo = true;
                 _context.Add(parteNovedad);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Apellido", parteNovedad.UsuarioId);
-            ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "CapacidadCarga", parteNovedad.VehiculoId);
+            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Cedula", parteNovedad.UsuarioId);
+            ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "Placa", parteNovedad.VehiculoId);
             return View(parteNovedad);
         }
 
@@ -85,8 +87,8 @@ namespace GestionVehicular.Controllers
             {
                 return NotFound();
             }
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Apellido", parteNovedad.UsuarioId);
-            ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "CapacidadCarga", parteNovedad.VehiculoId);
+            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Cedula", parteNovedad.UsuarioId);
+            ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "Placa", parteNovedad.VehiculoId);
             return View(parteNovedad);
         }
 
@@ -122,8 +124,8 @@ namespace GestionVehicular.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Apellido", parteNovedad.UsuarioId);
-            ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "CapacidadCarga", parteNovedad.VehiculoId);
+            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Cedula", parteNovedad.UsuarioId);
+            ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "Placa", parteNovedad.VehiculoId);
             return View(parteNovedad);
         }
 
@@ -161,14 +163,14 @@ namespace GestionVehicular.Controllers
             {
                 _context.ParteNovedades.Remove(parteNovedad);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ParteNovedadExists(int id)
         {
-          return _context.ParteNovedades.Any(e => e.ParteNovedadId == id);
+            return _context.ParteNovedades.Any(e => e.ParteNovedadId == id);
         }
     }
 }

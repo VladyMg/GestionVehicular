@@ -4,13 +4,13 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1 class="text-secondary">Lista de Usuarios</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" type="button" class="btn btn-success">Nuevo Usuario</a>
 </p>
-<table class="table">
-    <thead>
+<table class="table table-sm">
+    <thead class="table-primary">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
@@ -22,44 +22,54 @@
                 @Html.DisplayNameFor(model => model.Usuario)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Vehiculo)
+                Vehículo
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EsActivo)
+                Activo
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FechaCreacion)
+                Fecha
             </th>
+            <th></th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nota)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Usuario.Apellido)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vehiculo.CapacidadCarga)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EsActivo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaCreacion)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ParteNovedadId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ParteNovedadId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ParteNovedadId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nota)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Usuario.Nombre) @Html.DisplayFor(modelItem => item.Usuario.Apellido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vehiculo.Placa)
+                </td>
+                <td>
+                    @{
+                        var activo = item.EsActivo ? "Si" : "No";
+                    }
+                    @activo
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaCreacion)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ParteNovedadId" class="btn btn-warning">Edit</a>
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.ParteNovedadId" class="btn btn-secondary">Details</a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.ParteNovedadId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
