@@ -22,19 +22,19 @@ namespace GestionVehicular.Controllers
         // GET: Subcircuitos
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Subcircuito.Include(s => s.Circuito);
+            var applicationDbContext = _context.Subcircuitos.Include(s => s.Circuito);
             return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Subcircuitos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Subcircuito == null)
+            if (id == null || _context.Subcircuitos == null)
             {
                 return NotFound();
             }
 
-            var subcircuito = await _context.Subcircuito
+            var subcircuito = await _context.Subcircuitos
                 .Include(s => s.Circuito)
                 .FirstOrDefaultAsync(m => m.SubcircuitoId == id);
             if (subcircuito == null)
@@ -74,12 +74,12 @@ namespace GestionVehicular.Controllers
         // GET: Subcircuitos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Subcircuito == null)
+            if (id == null || _context.Subcircuitos == null)
             {
                 return NotFound();
             }
 
-            var subcircuito = await _context.Subcircuito.FindAsync(id);
+            var subcircuito = await _context.Subcircuitos.FindAsync(id);
             if (subcircuito == null)
             {
                 return NotFound();
@@ -127,12 +127,12 @@ namespace GestionVehicular.Controllers
         // GET: Subcircuitos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Subcircuito == null)
+            if (id == null || _context.Subcircuitos == null)
             {
                 return NotFound();
             }
 
-            var subcircuito = await _context.Subcircuito
+            var subcircuito = await _context.Subcircuitos
                 .Include(s => s.Circuito)
                 .FirstOrDefaultAsync(m => m.SubcircuitoId == id);
             if (subcircuito == null)
@@ -148,14 +148,14 @@ namespace GestionVehicular.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Subcircuito == null)
+            if (_context.Subcircuitos == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Subcircuito'  is null.");
             }
-            var subcircuito = await _context.Subcircuito.FindAsync(id);
+            var subcircuito = await _context.Subcircuitos.FindAsync(id);
             if (subcircuito != null)
             {
-                _context.Subcircuito.Remove(subcircuito);
+                _context.Subcircuitos.Remove(subcircuito);
             }
 
             await _context.SaveChangesAsync();
@@ -164,7 +164,7 @@ namespace GestionVehicular.Controllers
 
         private bool SubcircuitoExists(int id)
         {
-            return _context.Subcircuito.Any(e => e.SubcircuitoId == id);
+            return _context.Subcircuitos.Any(e => e.SubcircuitoId == id);
         }
     }
 }

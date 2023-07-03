@@ -16,10 +16,21 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<Circuito> Circuitos { get; set; }
 
-    public DbSet<Subcircuito> Subcircuito { get; set; }
+    public DbSet<Subcircuito> Subcircuitos { get; set; }
 
-    public DbSet<GestionVehicular.Models.Vehiculo> Vehiculo { get; set; }
+    public DbSet<Vehiculo> Vehiculos { get; set; }
 
-    public DbSet<GestionVehicular.Models.TipoMantenimiento> TipoMantenimiento { get; set; }
+    public DbSet<TipoMantenimiento> TiposMantenimiento { get; set; }
+
+    public DbSet<Mantenimiento> Mantenimientos { get; set; }
+
+    public DbSet<ParteNovedad> ParteNovedades { get; set; }
+
+    public DbSet<Abastecimiento> Abastecimientos { get; set; }
+
+    public DbSet<Movilizacion> Movilizaciones { get; set; }
+
+    public DbSet<Aprobaciones> Aprobaciones { get; set; }
+
 
 }
