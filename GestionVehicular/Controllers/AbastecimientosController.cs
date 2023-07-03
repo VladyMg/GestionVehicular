@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GestionVehicular.Controllers;
 
+[Authorize]
 public class AbastecimientosController : Controller
 {
     private readonly ApplicationDbContext _context;

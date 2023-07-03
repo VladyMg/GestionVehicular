@@ -2,6 +2,7 @@
 
 namespace GestionVehicular.Controllers;
 
+[Authorize]
 public class RolesController : Controller
 {
     private readonly ApplicationDbContext _context;
