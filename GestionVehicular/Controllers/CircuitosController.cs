@@ -42,7 +42,7 @@ public class CircuitosController : Controller
     // GET: Circuitos/Create
     public IActionResult Create()
     {
-        ViewData["DistritoId"] = new SelectList(_context.Distritos, "DistritoId", "CodDistrito");
+        ViewData["DistritoId"] = new SelectList(_context.Distritos, "DistritoId", "Nombre");
         return View();
     }
 
@@ -78,7 +78,7 @@ public class CircuitosController : Controller
         {
             return NotFound();
         }
-        ViewData["DistritoId"] = new SelectList(_context.Distritos, "DistritoId", "CodDistrito", circuito.DistritoId);
+        ViewData["DistritoId"] = new SelectList(_context.Distritos, "DistritoId", "Nombre", circuito.DistritoId);
         return View(circuito);
     }
 
