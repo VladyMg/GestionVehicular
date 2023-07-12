@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 namespace GestionVehicular.Controllers;
 
 [Authorize]
-public class TipoSugerenciaController : Controller
+public class TiposSugerenciaController : Controller
 {
     private readonly ApplicationDbContext _context;
 
-    public TipoSugerenciaController(ApplicationDbContext context)
+    public TiposSugerenciaController(ApplicationDbContext context)
     {
         _context = context;
     }
