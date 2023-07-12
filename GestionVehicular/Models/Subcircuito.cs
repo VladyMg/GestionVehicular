@@ -31,8 +31,10 @@ public class Subcircuito
     // Usuario
     public virtual ICollection<Usuario> Usuarios { get; set; }
 
-    // Vehículo
+    // Vehï¿½culo
     public virtual ICollection<Vehiculo> Vehiculos { get; set; }
+    // Sugerencia
+    public virtual ICollection<Sugerencia> Sugerencias { get; set; }
 
 
 }
