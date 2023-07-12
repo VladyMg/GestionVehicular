@@ -96,7 +96,7 @@
                                         @if (role == "Administrador" || role == "Técnico 2")
                                         {
                                             <li class="dropdown-item">
-                                                <a class="nav-link text-primary" asp-area="" asp-controller="Movilizaciones"
+                                                <a class="nav-link text-primary" asp-area="" asp-controller="Aprobaciones"
                                            asp-action="Index">Aprobaciones</a>
                                             </li>
                                         }
@@ -135,6 +135,10 @@
                                         <li class="dropdown-item">
                                             <a class="nav-link text-primary" asp-area="" asp-controller="TiposMantenimiento"
                                            asp-action="Index">Tipos de Mantenimiento</a>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <a class="nav-link text-primary" asp-area="" asp-controller="TipoSugerencias"
+                                           asp-action="Index">Tipos Sugerencias</a>
                                         </li>
                                     </ul>
                                 </li>
