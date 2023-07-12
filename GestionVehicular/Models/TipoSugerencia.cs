@@ -16,6 +16,6 @@ public class TipoSugerencia
     public bool EsActivo { get; set; }
 
     // Navigation properties
-    public virtual ICollection<Sugerencia> Sugerencia { get; set; }
+    public virtual ICollection<Sugerencia> Sugerencias { get; set; }
 
 }

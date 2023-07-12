@@ -12,13 +12,13 @@ public class TiposSugerenciaController : Controller
         _context = context;
     }
 
-    // GET: TipoSugerencia
+    // GET: TiposSugerencias
     public async Task<IActionResult> Index()
     {
         return View(await _context.TipoSugerencias.ToListAsync());
     }
 
-    // GET: TipoSugerencia/Details/5
+    // GET: TiposSugerencias/Details/5
     public async Task<IActionResult> Details(int? id)
     {
         if (id == null || _context.TipoSugerencias == null)
@@ -36,30 +36,31 @@ public class TiposSugerenciaController : Controller
         return View(tiposugerencia);
     }
 
-    // GET: TipoSugerencia/Create
+    // GET: TiposSugerencias/Create
     public IActionResult Create()
     {
         return View();
     }
 
-    // POST: TipoSugerencia/Create
+    // POST: TiposSugerencia/Create
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("TipoSugerenciaId,Nombre,EsActivo")] TipoSugerencia TipoSugerencia)
+    public async Task<IActionResult> Create([Bind("TipoSugerenciaId,Nombre,EsActivo")] TipoSugerencia tiposugerencia)
     {
         if (ModelState.IsValid)
         {
-            TipoSugerencia.EsActivo = true;
-            _context.Add(TipoSugerencia);
+            tiposugerencia.EsActivo = true;
+            
+            _context.Add(tiposugerencia);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        return View(TipoSugerencia);
+        return View(tiposugerencia);
     }
 
-    // GET: Sugerencia/Edit/5
+    // GET: TipoSugerencia/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null || _context.TipoSugerencias == null)
@@ -80,9 +81,9 @@ public class TiposSugerenciaController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("TipoSugerenciaId,Nombre,EsActivo")] TipoSugerencia TipoSugerencia)
+    public async Task<IActionResult> Edit(int id, [Bind("TipoSugerenciaId,Nombre,EsActivo")] TipoSugerencia tiposugerencia)
     {
-        if (id != TipoSugerencia.TipoSugerenciaId)
+        if (id != tiposugerencia.TipoSugerenciaId)
         {
             return NotFound();
         }
@@ -91,12 +92,12 @@ public class TiposSugerenciaController : Controller
         {
             try
             {
-                _context.Update(TipoSugerencia);
+                _context.Update(tiposugerencia);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TipoSugerenciaExists(TipoSugerencia.TipoSugerenciaId))
+                if (!TipoSugerenciaExists(tiposugerencia.TipoSugerenciaId))
                 {
                     return NotFound();
                 }
@@ -107,7 +108,7 @@ public class TiposSugerenciaController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(TipoSugerencia);
+        return View(tiposugerencia);
     }
 
     // GET: TipoSugerencia/Delete/5
@@ -135,7 +136,7 @@ public class TiposSugerenciaController : Controller
     {
         if (_context.TipoSugerencias == null)
         {
-            return Problem("Entity set 'ApplicationDbContext.TipoSugerencia'  is null.");
+            return Problem("Entity set 'ApplicationDbContext.TipoSugerencias'  is null.");
         }
         var tiposugerencia = await _context.TipoSugerencias.FindAsync(id);
         if (tiposugerencia != null)
