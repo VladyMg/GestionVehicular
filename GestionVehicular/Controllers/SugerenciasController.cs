@@ -34,7 +34,7 @@ namespace GestionVehicular.Controllers
 
             if (fechaFin.HasValue)
             {
-                applicationDbContext = applicationDbContext.Where(s => s.Fecha >= fechaFin);
+                applicationDbContext = applicationDbContext.Where(s => s.Fecha <= fechaFin);
             }
 
             applicationDbContext = applicationDbContext.Include(s => s.Circuito).Include(s => s.Subcircuito).Include(s => s.TipoSugerencia);
@@ -84,7 +84,7 @@ namespace GestionVehicular.Controllers
 
             if (fechaFin.HasValue)
             {
-                applicationDbContext = applicationDbContext.Where(s => s.Fecha >= fechaFin);
+                applicationDbContext = applicationDbContext.Where(s => s.Fecha <= fechaFin);
             }
 
             applicationDbContext = applicationDbContext.Include(s => s.Circuito).Include(s => s.Subcircuito).Include(s => s.TipoSugerencia);
