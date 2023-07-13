@@ -7,7 +7,7 @@ public class Sugerencia
     public int SugerenciaId { get; set; }
 
     [Required]
-    [MaxLength(200)]    
+    [MaxLength(200)]
     public string Nombres { get; set; }
 
     [Required]
@@ -15,7 +15,6 @@ public class Sugerencia
     public string Apellidos { get; set; }
 
     [Required]
-    [MaxLength(20)]
     public int Contacto { get; set; }
 
     [Required]
@@ -24,6 +23,8 @@ public class Sugerencia
 
     [Required]
     public DateTime Fecha { get; set; }
+
+    // Navigation properties
 
     [ForeignKey("TipoSugerencia")]
     public int? TipoSugerenciaId { get; set; }

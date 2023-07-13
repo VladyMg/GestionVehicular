@@ -1,0 +1,74 @@
+﻿@model IEnumerable<GestionVehicular.Models.Sugerencia>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-secondary">Lista de Sugerencias</h1>
+
+
+<table class="table table-sm">
+    <thead class="table-primary">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                Tipo de Sugerencia
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombres)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellidos)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contacto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Detalle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Circuito)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subcircuito)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @{
+                        var fechaNacimiento = ((DateTime)item.Fecha).ToString("yyyy-MM-dd");
+                    }
+                    @fechaNacimiento
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipoSugerencia.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombres)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apellidos)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Contacto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Detalle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Circuito.CodCircuito)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subcircuito.CodSubcircuito)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
