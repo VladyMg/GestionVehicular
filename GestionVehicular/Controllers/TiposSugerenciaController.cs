@@ -51,8 +51,7 @@ public class TiposSugerenciaController : Controller
     {
         if (ModelState.IsValid)
         {
-            tiposugerencia.EsActivo = true;
-            
+            tiposugerencia.EsActivo = true;            
             _context.Add(tiposugerencia);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
