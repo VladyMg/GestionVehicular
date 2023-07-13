@@ -66,8 +66,8 @@ namespace GestionVehicular.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Login", "Account");
             }
-            ViewData["CircuitoId"] = new SelectList(_context.Circuitos, "CircuitoId", "CodCircuito", sugerencia.CircuitoId);
-            ViewData["SubcircuitoId"] = new SelectList(_context.Subcircuitos, "SubcircuitoId", "CodSubcircuito", sugerencia.SubcircuitoId);
+            ViewData["CircuitoId"] = new SelectList(_context.Circuitos, "CircuitoId", "Nombre", sugerencia.CircuitoId);
+            ViewData["SubcircuitoId"] = new SelectList(_context.Subcircuitos, "SubcircuitoId", "Nombre", sugerencia.SubcircuitoId);
             ViewData["TipoSugerenciaId"] = new SelectList(_context.TipoSugerencias, "TipoSugerenciaId", "Nombre", sugerencia.TipoSugerenciaId);
             return View(sugerencia);
         }
