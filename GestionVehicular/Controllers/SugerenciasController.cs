@@ -31,8 +31,8 @@ namespace GestionVehicular.Controllers
         // GET: Sugerencias/Create
         public IActionResult Create()
         {
-            ViewData["CircuitoId"] = new SelectList(_context.Circuitos, "CircuitoId", "CodCircuito");
-            ViewData["SubcircuitoId"] = new SelectList(_context.Subcircuitos, "SubcircuitoId", "CodSubcircuito");
+            ViewData["CircuitoId"] = new SelectList(_context.Circuitos, "CircuitoId", "Nombre");
+            ViewData["SubcircuitoId"] = new SelectList(_context.Subcircuitos, "SubcircuitoId", "Nombre");
             ViewData["TipoSugerenciaId"] = new SelectList(_context.TipoSugerencias, "TipoSugerenciaId", "Nombre");
             return View();
         }
