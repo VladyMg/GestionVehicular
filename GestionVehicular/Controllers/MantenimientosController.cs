@@ -229,9 +229,15 @@ public class MantenimientosController : Controller
         if (mantenimiento != null)
         {
             _context.Mantenimientos.Remove(mantenimiento);
+
+            var repuestos = await _context.Repuestos.Where(x => x.MantenimientoId == mantenimiento.MantenimientoId).ToListAsync();
+
+            foreach (var repuesto in repuestos)
+                _context.Repuestos.Remove(repuesto);
+
+            await _context.SaveChangesAsync();
         }
 
-        await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
 
@@ -295,11 +301,6 @@ public class MantenimientosController : Controller
             return RedirectToAction("Create");
     }
 
-    private bool MantenimientoExists(int id)
-    {
-        return _context.Mantenimientos.Any(e => e.MantenimientoId == id);
-    }
-
     private T GetObjectFromSession<T>(string name)
     {
         var options = new JsonSerializerOptions
@@ -326,5 +327,10 @@ public class MantenimientosController : Controller
         var json = JsonSerializer.Serialize(@object, options);
 
         HttpContext.Session.SetString(name, json);
+    }
+
+    private bool MantenimientoExists(int id)
+    {
+        return _context.Mantenimientos.Any(e => e.MantenimientoId == id);
     }
 }
