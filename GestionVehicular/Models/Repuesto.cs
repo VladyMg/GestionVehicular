@@ -1,5 +1,6 @@
 ﻿namespace GestionVehicular.Models;
 
+[Table("Repuesto")]
 public class Repuesto
 {
     [Key]
@@ -9,7 +10,6 @@ public class Repuesto
     [MaxLength(255)]
     public string Nombre { get; set; }
 
-    [Required]
     [MaxLength(500)]
     public string Descripcion { get; set; }
 
@@ -18,6 +18,7 @@ public class Repuesto
     public string Razon { get; set; }
 
     [Required]
+    [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
     public decimal? Cost { get; set; }
 
     [ForeignKey("Mantenimiento")]

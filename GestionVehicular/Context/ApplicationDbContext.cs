@@ -32,8 +32,10 @@ public class ApplicationDbContext : DbContext
     public DbSet<Aprobaciones> Aprobaciones { get; set; }
 
     public DbSet<TipoSugerencia> TipoSugerencias { get; set; }
-    
+
     public DbSet<Sugerencia> Sugerencias { get; set; }
+
+    public DbSet<Repuesto> Repuestos { get; set; }
 
 
 }
