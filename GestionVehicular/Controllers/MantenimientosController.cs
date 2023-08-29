@@ -98,6 +98,17 @@ public class MantenimientosController : Controller
                 _context.Add(repuesto);
             }
 
+            var aprobacion = new Aprobaciones
+            {
+                Estado = "Pendiente",
+                MantenimientoId = mantenimiento.MantenimientoId,
+                UsuarioId = mantenimiento.UsuarioId,
+                FechaCreacion = DateTime.Now,
+                EsActivo = true
+            };
+
+            _context.Add(aprobacion);
+
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
