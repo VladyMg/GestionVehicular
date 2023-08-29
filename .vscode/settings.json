@@ -7,8 +7,7 @@
     "spellright.documentTypes": [
         "markdown",
         "latex",
-        "plaintext",
-        "aspnetcorerazor"
+        "plaintext"
     ],
     "spellright.parserByClass": {
         "aspnetcorerazor": {

@@ -51,11 +51,25 @@ public class MantenimientosController : Controller
         ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Cedula");
         ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "Placa");
 
+        var mantenimiento = GetObjectFromSession<Mantenimiento>(nameof(Mantenimiento)) ?? new Mantenimiento();
+
+        if (mantenimiento.MantenimientoId > 0)
+        {
+            mantenimiento = new Mantenimiento();
+            SetObjectToSession(nameof(Mantenimiento), mantenimiento);
+        }
+
         var repuestos = GetObjectFromSession<List<Repuesto>>(nameof(Repuesto)) ?? new List<Repuesto>();
+
+        if (repuestos.Any(x => x.MantenimientoId > 0))
+        {
+            repuestos = new List<Repuesto>();
+            SetObjectToSession(nameof(Repuesto), repuestos);
+        }
 
         return View(new MantenimientoRepuestoViewModel
         {
-            Mantenimiento = new(),
+            Mantenimiento = mantenimiento,
             Repuesto = new(),
             Repuestos = repuestos
         });
@@ -88,11 +102,19 @@ public class MantenimientosController : Controller
 
             return RedirectToAction(nameof(Index));
         }
+
         ViewData["TipoMantenimientoId"] = new SelectList(_context.TiposMantenimiento, "TipoMantenimientoId", "Nombre", mantenimiento.TipoMantenimientoId);
         ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Apellido", mantenimiento.UsuarioId);
         ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "CapacidadCarga", mantenimiento.VehiculoId);
 
-        return View(mantenimiento);
+        var respuestos = GetObjectFromSession<List<Repuesto>>(nameof(Repuesto)) ?? new List<Repuesto>();
+
+        return View(new MantenimientoRepuestoViewModel
+        {
+            Mantenimiento = mantenimiento,
+            Repuesto = new(),
+            Repuestos = respuestos
+        });
     }
 
     // GET: Mantenimientos/Edit/5
@@ -161,7 +183,15 @@ public class MantenimientosController : Controller
         ViewData["TipoMantenimientoId"] = new SelectList(_context.TiposMantenimiento, "TipoMantenimientoId", "Nombre", mantenimiento.TipoMantenimientoId);
         ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Apellido", mantenimiento.UsuarioId);
         ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "CapacidadCarga", mantenimiento.VehiculoId);
-        return View(mantenimiento);
+
+        var repuestos = GetObjectFromSession<List<Repuesto>>(nameof(Repuesto)) ?? new List<Repuesto>();
+
+        return View(new MantenimientoRepuestoViewModel
+        {
+            Mantenimiento = mantenimiento,
+            Repuesto = new(),
+            Repuestos = repuestos
+        });
     }
 
     // GET: Mantenimientos/Delete/5
@@ -213,21 +243,16 @@ public class MantenimientosController : Controller
 
         var mantenimiento = GetObjectFromSession<Mantenimiento>(nameof(Mantenimiento)) ?? new Mantenimiento();
 
-        ViewData["TipoMantenimientoId"] = new SelectList(_context.TiposMantenimiento, "TipoMantenimientoId", "Nombre", mantenimiento.TipoMantenimientoId);
-        ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Apellido", mantenimiento.UsuarioId);
-        ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "CapacidadCarga", mantenimiento.VehiculoId);
-
-
         if (ModelState.IsValid)
         {
-            if (mantenimiento.MantenimientoId != 0)
+            if (mantenimiento.MantenimientoId > 0)
                 repuesto.MantenimientoId = mantenimiento.MantenimientoId;
 
             repuestos.Add(repuesto);
 
             SetObjectToSession(nameof(Repuesto), repuestos);
 
-            if (repuesto.MantenimientoId != 0)
+            if (repuesto.MantenimientoId > 0)
             {
                 _context.Add(repuesto);
                 _context.SaveChanges();
@@ -235,17 +260,10 @@ public class MantenimientosController : Controller
 
         }
 
-        var viewModel = new MantenimientoRepuestoViewModel
-        {
-            Mantenimiento = mantenimiento,
-            Repuesto = new(),
-            Repuestos = repuestos
-        };
-
-        if (mantenimiento != null && mantenimiento.MantenimientoId != 0)
-            return View("Edit", viewModel);
+        if (mantenimiento != null && mantenimiento.MantenimientoId > 0)
+            return RedirectToAction("Edit", new { id = mantenimiento.MantenimientoId });
         else
-            return View("Create", viewModel);
+            return RedirectToAction("Create");
     }
 
     [HttpPost, ActionName("RemoveRepuesto")]
@@ -256,15 +274,11 @@ public class MantenimientosController : Controller
 
         var mantenimiento = GetObjectFromSession<Mantenimiento>(nameof(Mantenimiento)) ?? new Mantenimiento();
 
-        ViewData["TipoMantenimientoId"] = new SelectList(_context.TiposMantenimiento, "TipoMantenimientoId", "Nombre", mantenimiento.TipoMantenimientoId);
-        ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Apellido", mantenimiento.UsuarioId);
-        ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "CapacidadCarga", mantenimiento.VehiculoId);
-
         if (repuestos[index] != null)
         {
             var repuesto = repuestos[index];
 
-            if (repuesto.RepuestoId != 0)
+            if (repuesto.RepuestoId > 0)
             {
                 _context.Repuestos.Remove(repuesto);
                 _context.SaveChanges();
@@ -275,17 +289,10 @@ public class MantenimientosController : Controller
 
         SetObjectToSession(nameof(Repuesto), repuestos);
 
-        var viewModel = new MantenimientoRepuestoViewModel
-        {
-            Mantenimiento = GetObjectFromSession<Mantenimiento>(nameof(Mantenimiento)) ?? new Mantenimiento(),
-            Repuesto = new(),
-            Repuestos = repuestos
-        };
-
-        if (mantenimiento != null && mantenimiento.MantenimientoId != 0)
-            return View("Edit", viewModel);
+        if (mantenimiento != null && mantenimiento.MantenimientoId > 0)
+            return RedirectToAction("Edit", new { id = mantenimiento.MantenimientoId });
         else
-            return View("Create", viewModel);
+            return RedirectToAction("Create");
     }
 
     private bool MantenimientoExists(int id)
