@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using GestionVehicular.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace GestionVehicular.Controllers;
 
@@ -47,7 +50,29 @@ public class MantenimientosController : Controller
         ViewData["TipoMantenimientoId"] = new SelectList(_context.TiposMantenimiento, "TipoMantenimientoId", "Nombre");
         ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Cedula");
         ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "Placa");
-        return View();
+
+        var mantenimiento = GetObjectFromSession<Mantenimiento>(nameof(Mantenimiento)) ?? new Mantenimiento();
+
+        if (mantenimiento.MantenimientoId > 0)
+        {
+            mantenimiento = new Mantenimiento();
+            SetObjectToSession(nameof(Mantenimiento), mantenimiento);
+        }
+
+        var repuestos = GetObjectFromSession<List<Repuesto>>(nameof(Repuesto)) ?? new List<Repuesto>();
+
+        if (repuestos.Any(x => x.MantenimientoId > 0))
+        {
+            repuestos = new List<Repuesto>();
+            SetObjectToSession(nameof(Repuesto), repuestos);
+        }
+
+        return View(new MantenimientoRepuestoViewModel
+        {
+            Mantenimiento = mantenimiento,
+            Repuesto = new(),
+            Repuestos = repuestos
+        });
     }
 
     // POST: Mantenimientos/Create
@@ -62,13 +87,45 @@ public class MantenimientosController : Controller
             mantenimiento.EsActivo = true;
             mantenimiento.FechaCreacion = DateTime.Now;
             _context.Add(mantenimiento);
+
             await _context.SaveChangesAsync();
+
+            var repuestos = GetObjectFromSession<List<Repuesto>>(nameof(Repuesto)) ?? new List<Repuesto>();
+
+            foreach (var repuesto in repuestos)
+            {
+                repuesto.MantenimientoId = mantenimiento.MantenimientoId;
+                _context.Add(repuesto);
+            }
+
+            var aprobacion = new Aprobaciones
+            {
+                Estado = "Pendiente",
+                MantenimientoId = mantenimiento.MantenimientoId,
+                UsuarioId = mantenimiento.UsuarioId,
+                FechaCreacion = DateTime.Now,
+                EsActivo = true
+            };
+
+            _context.Add(aprobacion);
+
+            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
+
         ViewData["TipoMantenimientoId"] = new SelectList(_context.TiposMantenimiento, "TipoMantenimientoId", "Nombre", mantenimiento.TipoMantenimientoId);
         ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Apellido", mantenimiento.UsuarioId);
         ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "CapacidadCarga", mantenimiento.VehiculoId);
-        return View(mantenimiento);
+
+        var respuestos = GetObjectFromSession<List<Repuesto>>(nameof(Repuesto)) ?? new List<Repuesto>();
+
+        return View(new MantenimientoRepuestoViewModel
+        {
+            Mantenimiento = mantenimiento,
+            Repuesto = new(),
+            Repuestos = respuestos
+        });
     }
 
     // GET: Mantenimientos/Edit/5
@@ -87,7 +144,19 @@ public class MantenimientosController : Controller
         ViewData["TipoMantenimientoId"] = new SelectList(_context.TiposMantenimiento, "TipoMantenimientoId", "Nombre", mantenimiento.TipoMantenimientoId);
         ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Apellido", mantenimiento.UsuarioId);
         ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "CapacidadCarga", mantenimiento.VehiculoId);
-        return View(mantenimiento);
+
+        var repuestos = await _context.Repuestos.Where(x => x.MantenimientoId == mantenimiento.MantenimientoId).ToListAsync();
+
+        SetObjectToSession(nameof(Repuesto), repuestos);
+
+        SetObjectToSession(nameof(Mantenimiento), mantenimiento);
+
+        return View(new MantenimientoRepuestoViewModel
+        {
+            Mantenimiento = mantenimiento,
+            Repuesto = new(),
+            Repuestos = repuestos
+        });
     }
 
     // POST: Mantenimientos/Edit/5
@@ -125,7 +194,15 @@ public class MantenimientosController : Controller
         ViewData["TipoMantenimientoId"] = new SelectList(_context.TiposMantenimiento, "TipoMantenimientoId", "Nombre", mantenimiento.TipoMantenimientoId);
         ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Apellido", mantenimiento.UsuarioId);
         ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "CapacidadCarga", mantenimiento.VehiculoId);
-        return View(mantenimiento);
+
+        var repuestos = GetObjectFromSession<List<Repuesto>>(nameof(Repuesto)) ?? new List<Repuesto>();
+
+        return View(new MantenimientoRepuestoViewModel
+        {
+            Mantenimiento = mantenimiento,
+            Repuesto = new(),
+            Repuestos = repuestos
+        });
     }
 
     // GET: Mantenimientos/Delete/5
@@ -159,13 +236,108 @@ public class MantenimientosController : Controller
             return Problem("Entity set 'ApplicationDbContext.Mantenimientos'  is null.");
         }
         var mantenimiento = await _context.Mantenimientos.FindAsync(id);
+
         if (mantenimiento != null)
         {
             _context.Mantenimientos.Remove(mantenimiento);
+
+            var repuestos = await _context.Repuestos.Where(x => x.MantenimientoId == mantenimiento.MantenimientoId).ToListAsync();
+
+            foreach (var repuesto in repuestos)
+                _context.Repuestos.Remove(repuesto);
+
+            await _context.SaveChangesAsync();
         }
 
-        await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost, ActionName("AddRepuesto")]
+    [ValidateAntiForgeryToken]
+    public IActionResult AddRepuesto([Bind("RepuestoId,Nombre,Descripcion,Razon,Cost,MantenimientoId,ParteNovedadId")] Repuesto repuesto)
+    {
+        var repuestos = GetObjectFromSession<List<Repuesto>>(nameof(Repuesto)) ?? new List<Repuesto>();
+
+        var mantenimiento = GetObjectFromSession<Mantenimiento>(nameof(Mantenimiento)) ?? new Mantenimiento();
+
+        if (ModelState.IsValid)
+        {
+            if (mantenimiento.MantenimientoId > 0)
+                repuesto.MantenimientoId = mantenimiento.MantenimientoId;
+
+            repuestos.Add(repuesto);
+
+            SetObjectToSession(nameof(Repuesto), repuestos);
+
+            if (repuesto.MantenimientoId > 0)
+            {
+                _context.Add(repuesto);
+                _context.SaveChanges();
+            }
+
+        }
+
+        if (mantenimiento != null && mantenimiento.MantenimientoId > 0)
+            return RedirectToAction("Edit", new { id = mantenimiento.MantenimientoId });
+        else
+            return RedirectToAction("Create");
+    }
+
+    [HttpPost, ActionName("RemoveRepuesto")]
+    [ValidateAntiForgeryToken]
+    public IActionResult RemoveRepuesto(int index)
+    {
+        var repuestos = GetObjectFromSession<List<Repuesto>>(nameof(Repuesto)) ?? new List<Repuesto>();
+
+        var mantenimiento = GetObjectFromSession<Mantenimiento>(nameof(Mantenimiento)) ?? new Mantenimiento();
+
+        if (repuestos[index] != null)
+        {
+            var repuesto = repuestos[index];
+
+            if (repuesto.RepuestoId > 0)
+            {
+                _context.Repuestos.Remove(repuesto);
+                _context.SaveChanges();
+            }
+
+            repuestos.RemoveAt(index);
+        }
+
+        SetObjectToSession(nameof(Repuesto), repuestos);
+
+        if (mantenimiento != null && mantenimiento.MantenimientoId > 0)
+            return RedirectToAction("Edit", new { id = mantenimiento.MantenimientoId });
+        else
+            return RedirectToAction("Create");
+    }
+
+    private T GetObjectFromSession<T>(string name)
+    {
+        var options = new JsonSerializerOptions
+        {
+            ReferenceHandler = ReferenceHandler.Preserve
+        };
+
+        var sessionObject = HttpContext.Session.GetString(name);
+
+        if (string.IsNullOrEmpty(sessionObject))
+            return default;
+
+        return JsonSerializer.Deserialize<T>(sessionObject, options);
+    }
+
+    private void SetObjectToSession<T>(string name, T @object)
+    {
+
+        var options = new JsonSerializerOptions
+        {
+            ReferenceHandler = ReferenceHandler.Preserve
+        };
+
+        var json = JsonSerializer.Serialize(@object, options);
+
+        HttpContext.Session.SetString(name, json);
     }
 
     private bool MantenimientoExists(int id)

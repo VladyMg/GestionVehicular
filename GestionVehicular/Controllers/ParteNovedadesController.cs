@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using GestionVehicular.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace GestionVehicular.Controllers;
@@ -45,7 +48,29 @@ public class ParteNovedadesController : Controller
     {
         ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Cedula");
         ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "Placa");
-        return View();
+
+        var parteNovedad = GetObjectFromSession<ParteNovedad>(nameof(ParteNovedad)) ?? new ParteNovedad();
+
+        if (parteNovedad.ParteNovedadId > 0)
+        {
+            parteNovedad = new ParteNovedad();
+            SetObjectToSession(nameof(ParteNovedad), parteNovedad);
+        }
+
+        var repuestos = GetObjectFromSession<List<Repuesto>>(nameof(Repuesto)) ?? new List<Repuesto>();
+
+        if (repuestos.Any(x => x.ParteNovedadId > 0))
+        {
+            repuestos = new List<Repuesto>();
+            SetObjectToSession(nameof(Repuesto), repuestos);
+        }
+
+        return View(new ParteNovedadRepuestoViewModel
+        {
+            ParteNovedad = parteNovedad,
+            Repuesto = new(),
+            Repuestos = repuestos
+        });
     }
 
     // POST: ParteNovedades/Create
@@ -59,13 +84,33 @@ public class ParteNovedadesController : Controller
         {
             parteNovedad.FechaCreacion = DateTime.Now;
             parteNovedad.EsActivo = true;
+
             _context.Add(parteNovedad);
             await _context.SaveChangesAsync();
+
+            var repuestos = GetObjectFromSession<List<Repuesto>>(nameof(Repuesto)) ?? new List<Repuesto>();
+
+            foreach (var repuesto in repuestos)
+            {
+                repuesto.ParteNovedadId = parteNovedad.ParteNovedadId;
+                _context.Add(repuesto);
+            }
+
+            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
         ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Cedula", parteNovedad.UsuarioId);
         ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "Placa", parteNovedad.VehiculoId);
-        return View(parteNovedad);
+
+        var respuestos = GetObjectFromSession<List<Repuesto>>(nameof(Repuesto)) ?? new List<Repuesto>();
+
+        return View(new ParteNovedadRepuestoViewModel
+        {
+            ParteNovedad = parteNovedad,
+            Repuesto = new(),
+            Repuestos = respuestos
+        });
     }
 
     // GET: ParteNovedades/Edit/5
@@ -83,7 +128,19 @@ public class ParteNovedadesController : Controller
         }
         ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Cedula", parteNovedad.UsuarioId);
         ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "Placa", parteNovedad.VehiculoId);
-        return View(parteNovedad);
+
+        var repuestos = await _context.Repuestos.Where(x => x.ParteNovedadId == parteNovedad.ParteNovedadId).ToListAsync();
+
+        SetObjectToSession(nameof(Repuesto), repuestos);
+
+        SetObjectToSession(nameof(ParteNovedad), parteNovedad);
+
+        return View(new ParteNovedadRepuestoViewModel
+        {
+            ParteNovedad = parteNovedad,
+            Repuesto = new(),
+            Repuestos = repuestos
+        });
     }
 
     // POST: ParteNovedades/Edit/5
@@ -120,7 +177,15 @@ public class ParteNovedadesController : Controller
         }
         ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Cedula", parteNovedad.UsuarioId);
         ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "Placa", parteNovedad.VehiculoId);
-        return View(parteNovedad);
+
+        var repuestos = GetObjectFromSession<List<Repuesto>>(nameof(Repuesto)) ?? new List<Repuesto>();
+
+        return View(new ParteNovedadRepuestoViewModel
+        {
+            ParteNovedad = parteNovedad,
+            Repuesto = new(),
+            Repuestos = repuestos
+        });
     }
 
     // GET: ParteNovedades/Delete/5
@@ -153,13 +218,108 @@ public class ParteNovedadesController : Controller
             return Problem("Entity set 'ApplicationDbContext.ParteNovedades'  is null.");
         }
         var parteNovedad = await _context.ParteNovedades.FindAsync(id);
+
         if (parteNovedad != null)
         {
             _context.ParteNovedades.Remove(parteNovedad);
+
+            var repuestos = await _context.Repuestos.Where(x => x.ParteNovedadId == parteNovedad.ParteNovedadId).ToListAsync();
+
+            foreach (var repuesto in repuestos)
+                _context.Repuestos.Remove(repuesto);
+
+            await _context.SaveChangesAsync();
         }
 
-        await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost, ActionName("AddRepuesto")]
+    [ValidateAntiForgeryToken]
+    public IActionResult AddRepuesto([Bind("RepuestoId,Nombre,Descripcion,Razon,Cost,ParteNovedadId,ParteNovedadId")] Repuesto repuesto)
+    {
+        var repuestos = GetObjectFromSession<List<Repuesto>>(nameof(Repuesto)) ?? new List<Repuesto>();
+
+        var parteNovedad = GetObjectFromSession<ParteNovedad>(nameof(ParteNovedad)) ?? new ParteNovedad();
+
+        if (ModelState.IsValid)
+        {
+            if (parteNovedad.ParteNovedadId > 0)
+                repuesto.ParteNovedadId = parteNovedad.ParteNovedadId;
+
+            repuestos.Add(repuesto);
+
+            SetObjectToSession(nameof(Repuesto), repuestos);
+
+            if (repuesto.ParteNovedadId > 0)
+            {
+                _context.Add(repuesto);
+                _context.SaveChanges();
+            }
+
+        }
+
+        if (parteNovedad != null && parteNovedad.ParteNovedadId > 0)
+            return RedirectToAction("Edit", new { id = parteNovedad.ParteNovedadId });
+        else
+            return RedirectToAction("Create");
+    }
+
+    [HttpPost, ActionName("RemoveRepuesto")]
+    [ValidateAntiForgeryToken]
+    public IActionResult RemoveRepuesto(int index)
+    {
+        var repuestos = GetObjectFromSession<List<Repuesto>>(nameof(Repuesto)) ?? new List<Repuesto>();
+
+        var parteNovedad = GetObjectFromSession<ParteNovedad>(nameof(ParteNovedad)) ?? new ParteNovedad();
+
+        if (repuestos[index] != null)
+        {
+            var repuesto = repuestos[index];
+
+            if (repuesto.RepuestoId > 0)
+            {
+                _context.Repuestos.Remove(repuesto);
+                _context.SaveChanges();
+            }
+
+            repuestos.RemoveAt(index);
+        }
+
+        SetObjectToSession(nameof(Repuesto), repuestos);
+
+        if (parteNovedad != null && parteNovedad.ParteNovedadId > 0)
+            return RedirectToAction("Edit", new { id = parteNovedad.ParteNovedadId });
+        else
+            return RedirectToAction("Create");
+    }
+
+    private T GetObjectFromSession<T>(string name)
+    {
+        var options = new JsonSerializerOptions
+        {
+            ReferenceHandler = ReferenceHandler.Preserve
+        };
+
+        var sessionObject = HttpContext.Session.GetString(name);
+
+        if (string.IsNullOrEmpty(sessionObject))
+            return default;
+
+        return JsonSerializer.Deserialize<T>(sessionObject, options);
+    }
+
+    private void SetObjectToSession<T>(string name, T @object)
+    {
+
+        var options = new JsonSerializerOptions
+        {
+            ReferenceHandler = ReferenceHandler.Preserve
+        };
+
+        var json = JsonSerializer.Serialize(@object, options);
+
+        HttpContext.Session.SetString(name, json);
     }
 
     private bool ParteNovedadExists(int id)

@@ -1,4 +1,4 @@
-﻿@model GestionVehicular.Models.Mantenimiento
+﻿@model GestionVehicular.ViewModels.MantenimientoRepuestoViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -12,47 +12,47 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="MantenimientoId" />
+            <input type="hidden" asp-for="Mantenimiento.MantenimientoId" />
             <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
+                <label asp-for="Mantenimiento.Nombre" class="control-label"></label>
+                <input asp-for="Mantenimiento.Nombre" class="form-control" />
+                <span asp-validation-for="Mantenimiento.Nombre" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Kilometraje" class="control-label"></label>
-                <input asp-for="Kilometraje" class="form-control" />
-                <span asp-validation-for="Kilometraje" class="text-danger"></span>
+                <label asp-for="Mantenimiento.Kilometraje" class="control-label"></label>
+                <input asp-for="Mantenimiento.Kilometraje" class="form-control" />
+                <span asp-validation-for="Mantenimiento.Kilometraje" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Observacion" class="control-label"></label>
-                <input asp-for="Observacion" class="form-control" />
-                <span asp-validation-for="Observacion" class="text-danger"></span>
+                <label asp-for="Mantenimiento.Observacion" class="control-label"></label>
+                <input asp-for="Mantenimiento.Observacion" class="form-control" />
+                <span asp-validation-for="Mantenimiento.Observacion" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UsuarioId" class="control-label"></label>
-                <select asp-for="UsuarioId" class="form-control" asp-items="ViewBag.UsuarioId"></select>
-                <span asp-validation-for="UsuarioId" class="text-danger"></span>
+                <label asp-for="Mantenimiento.UsuarioId" class="control-label"></label>
+                <select asp-for="Mantenimiento.UsuarioId" class="form-control" asp-items="ViewBag.UsuarioId"></select>
+                <span asp-validation-for="Mantenimiento.UsuarioId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="VehiculoId" class="control-label"></label>
-                <select asp-for="VehiculoId" class="form-control" asp-items="ViewBag.VehiculoId"></select>
-                <span asp-validation-for="VehiculoId" class="text-danger"></span>
+                <label asp-for="Mantenimiento.VehiculoId" class="control-label"></label>
+                <select asp-for="Mantenimiento.VehiculoId" class="form-control" asp-items="ViewBag.VehiculoId"></select>
+                <span asp-validation-for="Mantenimiento.VehiculoId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TipoMantenimientoId" class="control-label"></label>
-                <select asp-for="TipoMantenimientoId" class="form-control" asp-items="ViewBag.TipoMantenimientoId"></select>
-                <span asp-validation-for="TipoMantenimientoId" class="text-danger"></span>
+                <label asp-for="Mantenimiento.TipoMantenimientoId" class="control-label"></label>
+                <select asp-for="Mantenimiento.TipoMantenimientoId" class="form-control" asp-items="ViewBag.TipoMantenimientoId"></select>
+                <span asp-validation-for="Mantenimiento.TipoMantenimientoId" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="EsActivo" /> Activo
+                    <input class="form-check-input" asp-for="Mantenimiento.EsActivo" /> Activo
                 </label>
             </div>
             <div class="form-group" style="display:none">
-                <label asp-for="FechaCreacion" class="control-label"></label>
-                <input asp-for="FechaCreacion" class="form-control" />
-                <span asp-validation-for="FechaCreacion" class="text-danger"></span>
+                <label asp-for="Mantenimiento.FechaCreacion" class="control-label"></label>
+                <input asp-for="Mantenimiento.FechaCreacion" class="form-control" />
+                <span asp-validation-for="Mantenimiento.FechaCreacion" class="text-danger"></span>
             </div>
             <hr />
             <div class="row">
@@ -66,6 +66,95 @@
                 </div>
             </div>
         </form>
+    </div>
+    <div class="col-8 text-center">
+        <h5 class="text-success">Añadir Repuesto Utilizado</h5>
+        <form asp-action="AddRepuesto">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row justify-content-center">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="Repuesto.Nombre" class="control-label"></label>
+                        <input asp-for="Repuesto.Nombre" class="form-control" />
+                        <span asp-validation-for="Repuesto.Nombre" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="Repuesto.Razon" class="control-label"></label>
+                        <textarea asp-for="Repuesto.Razon" class="form-control" rows="1"></textarea>
+                        <span asp-validation-for="Repuesto.Razon" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="Repuesto.Cost" class="control-label"></label>
+                        <input asp-for="Repuesto.Cost" class="form-control" />
+                        <span asp-validation-for="Repuesto.Cost" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-4" style="display: none;">
+                    <div class="form-group">
+                        <label asp-for="Repuesto.MantenimientoId" class="control-label"></label>
+                        <input asp-for="Repuesto.MantenimientoId" class="form-control" />
+                        <span asp-validation-for="Repuesto.MantenimientoId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-4 text-center">
+                    <br />
+                    <div class="form-group">
+                        <input type="submit" value="Añadir" class="btn btn-warning" />
+                    </div>
+                </div>
+            </div>
+        </form>
+        <hr />
+        <div class="row">
+            <div class="col-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Repuesto.Nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Repuesto.Razon)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Repuesto.Cost)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int index = 0;
+                        }
+                        @foreach (var item in Model.Repuestos)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Razon)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Cost)
+                                </td>
+                                <td>
+                                    <form asp-action="RemoveRepuesto" id="@index">
+                                        <input type="submit" value="Borrar" class="btn btn-danger" />
+                                    </form>
+                                    <br />
+                                </td>
+                            </tr>
+                            index++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 

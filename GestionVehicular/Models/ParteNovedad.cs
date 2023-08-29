@@ -26,4 +26,7 @@ public class ParteNovedad
 
     [Required]
     public DateTime FechaCreacion { get; set; }
+
+    // Navigation properties
+    public virtual ICollection<Repuesto> Repuestos { get; set; }
 }

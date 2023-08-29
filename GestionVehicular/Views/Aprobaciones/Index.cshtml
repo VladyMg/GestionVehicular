@@ -1,0 +1,97 @@
+﻿@model IEnumerable<GestionVehicular.Models.Aprobaciones>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tipo
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Usuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaCreacion)
+            </th>
+            <th>
+                Activo
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @{
+                    if(item.MantenimientoId > 0){
+                        <p>Mantenimiento</p>
+                    }
+                    else if(item.PartesNovedadesId > 0)
+                    {
+                        <p>Parte/Novedad</p>
+                    }
+                    else if(item.AbastecimientoId > 0)
+                    {
+                        <p>Abastecimiento</p>
+                    }
+                    else if(item.MovilizacionId > 0)
+                    {
+                        <p>Movilizacion</p>
+                    }
+                }
+            </td>
+            <td>
+                @{
+                    if(item.MantenimientoId > 0){
+                        @Html.DisplayFor(modelItem => item.Mantenimiento.Nombre);
+                    }
+                    else if(item.PartesNovedadesId > 0)
+                    {
+                        @Html.DisplayFor(modelItem => item.ParteNovedad.Nombre);
+                    }
+                    else if(item.AbastecimientoId > 0)
+                    {
+                        @Html.DisplayFor(modelItem => item.Abastecimiento.Vehiculo.Placa);
+                    }
+                    else if(item.MovilizacionId > 0)
+                    {
+                        @Html.DisplayFor(modelItem => item.Movilizacion.Vehiculo.Placa);
+                    }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Usuario.Nombre) @Html.DisplayFor(modelItem => item.Usuario.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaCreacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EsActivo)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.AprobacionId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.AprobacionId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.AprobacionId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
