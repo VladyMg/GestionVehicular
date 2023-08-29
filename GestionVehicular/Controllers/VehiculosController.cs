@@ -42,7 +42,7 @@ public class VehiculosController : Controller
     // GET: Vehiculos/Create
     public IActionResult Create()
     {
-        ViewData["SubcircuitoId"] = new SelectList(_context.Subcircuitos, "SubcircuitoId", "CodSubcircuito");
+        ViewData["SubcircuitoId"] = new SelectList(_context.Subcircuitos, "SubcircuitoId", "Nombre");
         return View();
     }
 
@@ -78,7 +78,7 @@ public class VehiculosController : Controller
         {
             return NotFound();
         }
-        ViewData["SubcircuitoId"] = new SelectList(_context.Subcircuitos, "SubcircuitoId", "CodSubcircuito", vehiculo.SubcircuitoId);
+        ViewData["SubcircuitoId"] = new SelectList(_context.Subcircuitos, "SubcircuitoId", "Nombre", vehiculo.SubcircuitoId);
         return View(vehiculo);
     }
 

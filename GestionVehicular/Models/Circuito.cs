@@ -28,7 +28,10 @@ public class Circuito
     [ForeignKey("Distrito")]
     public int? DistritoId { get; set; }
     public virtual Distrito Distrito { get; set; }
-
+    
+    // SubCircuito
     public virtual ICollection<Subcircuito> Subcircuitos { get; set; }
+    // Sugerencia
+    public virtual ICollection<Sugerencia> Sugerencias { get; set; }
 
 }

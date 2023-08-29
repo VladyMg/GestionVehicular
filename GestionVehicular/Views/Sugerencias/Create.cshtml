@@ -1,0 +1,79 @@
+﻿@model GestionVehicular.Models.Sugerencia
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_NoNavLayout.cshtml";
+}
+
+
+<form asp-action="Create">
+    <br />
+    <br />
+    <br />
+    <div class="container-vm">
+        <div class="container-fluid border">
+            <h1 class="text-center text-secondary">Buzón de sugerencias</h1>
+
+            <h4 class="text-success">Sugerencia</h4>
+            <FONT FACE="times new roman">Los campos marcados con asterisco (*) son obligatorios</FONT>
+            <hr />
+            <div class="row justify-content-center">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group col-6">
+                    <label asp-for="Nombres" class="control-label">Nombres:<span style="color: red;">&#42;</span></label>
+                    <input asp-for="Nombres" class="form-control" />
+                    <span asp-validation-for="Nombres" class="text-danger"></span>
+                </div>
+                <div class="form-group col-6">
+                    <label asp-for="Apellidos" class="control-label">Apellidos:<span style="color: red;">&#42;</span></label>
+                    <input asp-for="Apellidos" class="form-control" />
+                    <span asp-validation-for="Apellidos" class="text-danger"></span>
+                </div>
+                <div class="form-group col-6">
+                    <label asp-for="Contacto" class="control-label"></label>
+                    <input asp-for="Contacto" class="form-control" />
+                    <span asp-validation-for="Contacto" class="text-danger"></span>
+                </div>
+                <div class="form-group col-6">
+                    <label asp-for="Detalle" class="control-label">Detalle:<span style="color: red;">&#42;</span></label>
+                    <input asp-for="Detalle" class="form-control" />
+                    <span asp-validation-for="Detalle" class="text-danger"></span>
+                </div>
+                <div class="form-group col-6">
+                    <label asp-for="CircuitoId" class="control-label">Circuito:<span style="color: red;">&#42;</span></label>
+                    <select asp-for="CircuitoId" class="form-control" asp-items="ViewBag.CircuitoId"></select>
+                </div>
+                <div class="form-group col-6">
+                    <label asp-for="SubcircuitoId" class="control-label">Subcircuito:<span style="color: red;">&#42;</span></label>
+                    <select asp-for="SubcircuitoId" class="form-control" asp-items="ViewBag.SubcircuitoId"></select>
+                </div>
+                <div class="form-group col-6">
+                    <label asp-for="TipoSugerenciaId" class="control-label">Tipo Sugerencia:<span style="color: red;">&#42;</span></label>
+                    <select asp-for="TipoSugerenciaId" class="form-control" asp-items="ViewBag.TipoSugerenciaId"></select>
+                </div>
+                <div class="form-group col-6"></div>
+            </div>
+            <hr />
+            <div class="row justify-content-center">
+                <div class="col-3">
+                    <div class="form-group d-grid gap-2">
+                        <input type="submit" value="Enviar" class="btn btn-primary" />
+                    </div>
+                </div>
+                <div class="col-3 d-grid gap-2">
+                    <a asp-action="Login" asp-controller="Account" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </div>
+            <br />
+        </div>
+    </div>
+
+</form>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

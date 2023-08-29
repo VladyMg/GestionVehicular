@@ -1,0 +1,51 @@
+@model IEnumerable<GestionVehicular.Models.TipoSugerencia>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-secondary">Lista de Tipos de Sugerencias</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Nuevo Tipo</a>
+</p>
+<table class="table table-sm table-hover">
+    <thead class="table-primary">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                Activo
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @{
+                        var activo = item.EsActivo ? "Si" : "No";
+                    }
+                    @activo
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.TipoSugerenciaId" class="btn btn-warning">Edit</a>
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.TipoSugerenciaId" class="btn btn-secondary">Details</a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.TipoSugerenciaId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
