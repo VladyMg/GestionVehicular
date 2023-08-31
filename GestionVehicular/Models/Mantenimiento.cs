@@ -35,6 +35,10 @@ public class Mantenimiento
     [Required]
     public DateTime FechaCreacion { get; set; }
 
+    public string Estado { get; set; }
+
     // Navigation properties
     public virtual ICollection<Repuesto> Repuestos { get; set; }
+
+    public virtual Aprobaciones Aprobacion { get; set; }
 }

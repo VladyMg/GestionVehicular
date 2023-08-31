@@ -16,8 +16,37 @@ public class AbastecimientosController : Controller
     // GET: Abastecimientos
     public async Task<IActionResult> Index()
     {
-        var applicationDbContext = _context.Abastecimientos.Include(a => a.Usuario).Include(a => a.Vehiculo);
-        return View(await applicationDbContext.ToListAsync());
+        var abastecimientos = await _context.Abastecimientos
+        .Include(a => a.Usuario)
+        .Include(a => a.Vehiculo)
+        .ToListAsync();
+
+        var aprobaciones = await _context.Aprobaciones
+        .Where(x => x.AbastecimientoId > 0)
+        .ToListAsync();
+
+        var query = from abastecimiento in abastecimientos
+                    join aprobacion in aprobaciones
+                    on abastecimiento.AbastecimientoId equals aprobacion.AbastecimientoId
+                    select new Abastecimiento
+                    {
+                        AbastecimientoId = abastecimiento.AbastecimientoId,
+                        Fecha = abastecimiento.Fecha,
+                        Gasolinera = abastecimiento.Gasolinera,
+                        HoraLlegada = abastecimiento.HoraLlegada,
+                        HoraSalida = abastecimiento.HoraSalida,
+                        Combustible = abastecimiento.Combustible,
+                        KilometrosSalida = abastecimiento.KilometrosSalida,
+                        UsuarioId = abastecimiento.UsuarioId,
+                        VehiculoId = abastecimiento.VehiculoId,
+                        EsActivo = abastecimiento.EsActivo,
+                        FechaCreacion = abastecimiento.FechaCreacion,
+                        Usuario = abastecimiento.Usuario,
+                        Vehiculo = abastecimiento.Vehiculo,
+                        Aprobacion = aprobacion
+                    };
+
+        return View(query.OrderByDescending(x => x.FechaCreacion).ToList());
     }
 
     // GET: Abastecimientos/Details/5
@@ -32,10 +61,16 @@ public class AbastecimientosController : Controller
             .Include(a => a.Usuario)
             .Include(a => a.Vehiculo)
             .FirstOrDefaultAsync(m => m.AbastecimientoId == id);
+
         if (abastecimiento == null)
         {
             return NotFound();
         }
+
+        var aprovacion = await _context.Aprobaciones
+        .FirstOrDefaultAsync(x => x.AbastecimientoId == abastecimiento.AbastecimientoId);
+
+        abastecimiento.Aprobacion = aprovacion;
 
         return View(abastecimiento);
     }
@@ -59,7 +94,21 @@ public class AbastecimientosController : Controller
         {
             abastecimiento.EsActivo = true;
             abastecimiento.FechaCreacion = DateTime.Now;
+
             _context.Add(abastecimiento);
+
+            var aprobacion = new Aprobaciones
+            {
+                Tipo = "Abastecimiento",
+                Estado = "Pendiente",
+                PartesNovedadesId = abastecimiento.AbastecimientoId,
+                UsuarioId = abastecimiento.UsuarioId,
+                FechaCreacion = DateTime.Now,
+                EsActivo = true
+            };
+
+            _context.Add(aprobacion);
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

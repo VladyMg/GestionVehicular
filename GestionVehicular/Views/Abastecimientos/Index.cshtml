@@ -4,12 +4,15 @@
     ViewData["Title"] = "Index";
 }
 
-<h1 class="text-secondary">Lista de Abastecimientos</h1>
-
+<div class="card border-success">
+    <div class="card-header">
+        <h1 class="text-secondary">Lista de Abastecimientos</h1>
 <p>
     <a asp-action="Create" type="button" class="btn btn-success">Nuevo Abastecimiento</a>
 </p>
-<table class="table table-sm">
+    </div>
+    <div class="card-body">
+        <table class="table table-sm">
     <thead class="table-primary">
         <tr>
             <th>
@@ -39,6 +42,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.EsActivo)
             </th>
+            <th>
+                        Estado de Solicitud
+                    </th>
             <th></th>
             <th></th>
             <th></th>
@@ -73,6 +79,9 @@
                     @Html.DisplayFor(modelItem => item.Vehiculo.CapacidadCarga)
                 </td>
                 <td>
+                            @Html.DisplayFor(modelItem => item.Aprobacion.Estado)
+                        </td>
+                <td>
                     @{
                         var activo = item.EsActivo ? "Si" : "No";
                     }
@@ -91,3 +100,8 @@
         }
     </tbody>
 </table>
+
+    </div>
+</div>
+
+
