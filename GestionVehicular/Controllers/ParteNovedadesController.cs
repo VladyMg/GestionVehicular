@@ -19,8 +19,33 @@ public class ParteNovedadesController : Controller
     // GET: ParteNovedades
     public async Task<IActionResult> Index()
     {
-        var applicationDbContext = _context.ParteNovedades.Include(p => p.Usuario).Include(p => p.Vehiculo);
-        return View(await applicationDbContext.ToListAsync());
+        var partes = await _context.ParteNovedades
+        .Include(p => p.Usuario)
+        .Include(p => p.Vehiculo)
+        .ToListAsync();
+
+        var aprobaciones = await _context.Aprobaciones
+        .Where(x => x.PartesNovedadesId > 0)
+        .ToListAsync();
+
+        var query = from parte in partes
+                    join aprobacion in aprobaciones
+                    on parte.ParteNovedadId equals aprobacion.PartesNovedadesId
+                    select new ParteNovedad
+                    {
+                        ParteNovedadId = parte.ParteNovedadId,
+                        Nombre = parte.Nombre,
+                        Nota = parte.Nota,
+                        UsuarioId = parte.UsuarioId,
+                        VehiculoId = parte.VehiculoId,
+                        EsActivo = parte.EsActivo,
+                        FechaCreacion = parte.FechaCreacion,
+                        Usuario = parte.Usuario,
+                        Vehiculo = parte.Vehiculo,
+                        Aprobacion = aprobacion
+                    };
+
+        return View(query.OrderByDescending(x => x.FechaCreacion).ToList());
     }
 
     // GET: ParteNovedades/Details/5
@@ -35,10 +60,16 @@ public class ParteNovedadesController : Controller
             .Include(p => p.Usuario)
             .Include(p => p.Vehiculo)
             .FirstOrDefaultAsync(m => m.ParteNovedadId == id);
+
         if (parteNovedad == null)
         {
             return NotFound();
         }
+
+        var aprovacion = await _context.Aprobaciones
+        .FirstOrDefaultAsync(x => x.PartesNovedadesId == parteNovedad.ParteNovedadId);
+
+        parteNovedad.Aprobacion = aprovacion;
 
         return View(parteNovedad);
     }
@@ -95,6 +126,18 @@ public class ParteNovedadesController : Controller
                 repuesto.ParteNovedadId = parteNovedad.ParteNovedadId;
                 _context.Add(repuesto);
             }
+
+            var aprobacion = new Aprobaciones
+            {
+                Tipo = "ParteNovedad",
+                Estado = "Pendiente",
+                PartesNovedadesId = parteNovedad.ParteNovedadId,
+                UsuarioId = parteNovedad.UsuarioId,
+                FechaCreacion = DateTime.Now,
+                EsActivo = true
+            };
+
+            _context.Add(aprobacion);
 
             await _context.SaveChangesAsync();
 

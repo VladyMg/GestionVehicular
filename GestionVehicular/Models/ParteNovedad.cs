@@ -29,4 +29,6 @@ public class ParteNovedad
 
     // Navigation properties
     public virtual ICollection<Repuesto> Repuestos { get; set; }
+
+    public virtual Aprobaciones Aprobacion { get; set; }
 }

@@ -38,4 +38,6 @@ public class Abastecimiento
 
     [Required]
     public DateTime FechaCreacion { get; set; }
+
+    public virtual Aprobaciones Aprobacion { get; set; }
 }

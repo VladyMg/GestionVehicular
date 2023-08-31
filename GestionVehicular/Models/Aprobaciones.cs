@@ -36,4 +36,6 @@ public class Aprobaciones
 
     [Required]
     public bool EsActivo { get; set; }
+
+    public string Tipo { get; set; }
 }

@@ -19,8 +19,34 @@ public class MantenimientosController : Controller
     // GET: Mantenimientos
     public async Task<IActionResult> Index()
     {
-        var applicationDbContext = _context.Mantenimientos.Include(m => m.TipoMantenimiento).Include(m => m.Usuario).Include(m => m.Vehiculo);
-        return View(await applicationDbContext.ToListAsync());
+        var mantenimientos = await _context.Mantenimientos
+        .Include(m => m.TipoMantenimiento)
+        .Include(m => m.Usuario)
+        .Include(m => m.Vehiculo)
+        .ToListAsync();
+
+        var aprobaciones = await _context.Aprobaciones
+        .Where(x => x.MantenimientoId > 0)
+        .ToListAsync();
+
+        var query = from mantenimiento in mantenimientos
+                    join aprobacion in aprobaciones
+                    on mantenimiento.MantenimientoId equals aprobacion.MantenimientoId
+                    select new Mantenimiento
+                    {
+                        MantenimientoId = mantenimiento.MantenimientoId,
+                        Nombre = mantenimiento.Nombre,
+                        Kilometraje = mantenimiento.Kilometraje,
+                        Observacion = mantenimiento.Observacion,
+                        UsuarioId = mantenimiento.UsuarioId,
+                        VehiculoId = mantenimiento.VehiculoId,
+                        TipoMantenimientoId = mantenimiento.TipoMantenimientoId,
+                        EsActivo = mantenimiento.EsActivo,
+                        FechaCreacion = mantenimiento.FechaCreacion,
+                        Aprobacion = aprobacion
+                    };
+
+        return View(query.OrderByDescending(x => x.FechaCreacion).ToList());
     }
 
     // GET: Mantenimientos/Details/5
@@ -36,10 +62,16 @@ public class MantenimientosController : Controller
             .Include(m => m.Usuario)
             .Include(m => m.Vehiculo)
             .FirstOrDefaultAsync(m => m.MantenimientoId == id);
+
         if (mantenimiento == null)
         {
             return NotFound();
         }
+
+        var aprovacion = await _context.Aprobaciones
+        .FirstOrDefaultAsync(x => x.MantenimientoId == mantenimiento.MantenimientoId);
+
+        mantenimiento.Aprobacion = aprovacion;
 
         return View(mantenimiento);
     }
@@ -100,6 +132,7 @@ public class MantenimientosController : Controller
 
             var aprobacion = new Aprobaciones
             {
+                Tipo = "Mantenimiento",
                 Estado = "Pendiente",
                 MantenimientoId = mantenimiento.MantenimientoId,
                 UsuarioId = mantenimiento.UsuarioId,
