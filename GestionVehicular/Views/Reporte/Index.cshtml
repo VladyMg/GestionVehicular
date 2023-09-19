@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1 class="text-secondary">Lista de Reportes</h1>
+<h1 class="text-secondary">Reportes de Mantenimiento</h1>
 <hr />
 @using (Html.BeginForm("Index", "Reporte", FormMethod.Get, new { id = "reportForm" }))
 {
@@ -71,7 +71,7 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
+                        <td>
                             @Html.DisplayFor(modelItem => item.Mantenimiento.Nombre)
                         </td>
                         <td>
@@ -104,10 +104,43 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Mantenimiento.Aprobacion.Estado)
                         </td>
-                    </tr>
+            </tr>        
+
         }
+<html>
+    <table>
+        <thead>
+            <tr>
+                <th>Costo Total:</th>
+                @* <th>Precio</th *@
+            </tr>
+        </thead>
+        @* <tbody>
+            @* @foreach (var producto in Model)
+            {
+                <tr>
+                    <td>@producto.Nombre</td>
+                    <td>@producto.Cost</td>
+                </tr>
+            }  
+        </tbody> *@
+    </table>
+
+    @if ( Model.Sum(p => p.Cost) > 0)
+    {
+        var sumaPrecios = Model.Sum(p => p.Cost);
+        <p>El costo total por mantenimiento es: @sumaPrecios</p>
+    }
+    else
+    {
+        <p>No exite valores a sumar.</p>
+    }
     </tbody>
 </table>
+
+
+
+
 
 @* @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
