@@ -42,7 +42,7 @@ public class MantenimientosController : Controller
 
             applicationDbContext = applicationDbContext.Include(s => s.TipoMantenimiento).Include(s => s.Usuario).Include(s => s.Vehiculo);
 
-        /* var mantenimientos = await _context.Mantenimientos
+        var mantenimientos = await _context.Mantenimientos
         .Include(m => m.TipoMantenimiento)
         .Include(m => m.Usuario)
         .Include(m => m.Vehiculo)
@@ -69,8 +69,8 @@ public class MantenimientosController : Controller
                         Aprobacion = aprobacion
                     };
 
-        return View(query.OrderByDescending(x => x.FechaCreacion).ToList()); */
-    return View(await applicationDbContext.ToListAsync());
+        /* return View(query.OrderByDescending(x => x.FechaCreacion).ToList()); */
+     return View(await applicationDbContext.ToListAsync()); 
     }
 
 

@@ -4,6 +4,9 @@
     ViewData["Title"] = "Index";
 }
 <h1 class="text-secondary">Lista de Mantenimientos</h1>
+<p>
+    <a asp-action="Create" type="button" class="btn btn-success">Nuevo Abastecimiento</a>
+</p>
 <hr />
 @using (Html.BeginForm("Index", "Mantenimientos", FormMethod.Get, new { id = "reportForm" }))
 {
