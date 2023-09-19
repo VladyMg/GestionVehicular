@@ -1,8 +1,17 @@
-﻿using GestionVehicular.ViewModels;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using GestionVehicular.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using OfficeOpenXml;
+using System.Net.Mime;
+using GestionVehiculos.Context;
+using GestionVehicular.Models;
 
 namespace GestionVehicular.Controllers;
 
@@ -17,9 +26,23 @@ public class MantenimientosController : Controller
     }
 
     // GET: Mantenimientos
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(DateTime? fechaInicio, DateTime? fechaFin)
     {
-        var mantenimientos = await _context.Mantenimientos
+        var applicationDbContext = _context.Mantenimientos.AsQueryable();
+
+            if (fechaInicio.HasValue)
+            {
+                applicationDbContext = applicationDbContext.Where(s => s.FechaCreacion>= fechaInicio);
+            }
+
+            if (fechaFin.HasValue)
+            {
+                applicationDbContext = applicationDbContext.Where(s => s.FechaCreacion <= fechaFin);
+            }
+
+            applicationDbContext = applicationDbContext.Include(s => s.TipoMantenimiento).Include(s => s.Usuario).Include(s => s.Vehiculo);
+
+        /* var mantenimientos = await _context.Mantenimientos
         .Include(m => m.TipoMantenimiento)
         .Include(m => m.Usuario)
         .Include(m => m.Vehiculo)
@@ -46,8 +69,10 @@ public class MantenimientosController : Controller
                         Aprobacion = aprobacion
                     };
 
-        return View(query.OrderByDescending(x => x.FechaCreacion).ToList());
+        return View(query.OrderByDescending(x => x.FechaCreacion).ToList()); */
+    return View(await applicationDbContext.ToListAsync());
     }
+
 
     // GET: Mantenimientos/Details/5
     public async Task<IActionResult> Details(int? id)
@@ -160,7 +185,61 @@ public class MantenimientosController : Controller
             Repuestos = respuestos
         });
     }
+// POST: Manteniminento/ExportarExcel        
+        public async Task<IActionResult> ExportarExcel(DateTime? fechaInicio, DateTime? fechaFin)
+        {
+            var applicationDbContext = _context.Mantenimientos.AsQueryable();
 
+            if (fechaInicio.HasValue)
+            {
+                applicationDbContext = applicationDbContext.Where(s => s.FechaCreacion >= fechaInicio);
+            }
+
+            if (fechaFin.HasValue)
+            {
+                applicationDbContext = applicationDbContext.Where(s => s.FechaCreacion <= fechaFin);
+            }
+
+            applicationDbContext = applicationDbContext.Include(s => s.TipoMantenimiento).Include(s => s.Usuario).Include(s => s.Vehiculo);
+
+            var mantenimientos = await applicationDbContext.ToListAsync();
+
+            var report = (from s in mantenimientos
+                          group s by new
+                          {    
+                              TipoMantenimiento = s.TipoMantenimiento.Nombre,
+                              Usuario = s.Usuario.Cedula,
+                              Vehiculo = s.Vehiculo.Placa,
+                              /* TipoSugerenciaNombre = s.TipoSugerencia.Nombre,
+                              CircuitoNombre = s.Circuito.Nombre,
+                              SubcircuitoNombre = s.Subcircuito.Nombre, */
+                          } into g
+                          select new
+                          {
+                              FechaInicio = fechaInicio.ToString(),
+                              FechaFin = fechaFin.ToString(),
+                              Cantidad = g.Count(),
+                              Tipo = g.Key.TipoMantenimiento,
+                              Usuario = g.Key.Usuario,
+                              Vehiculo = g.Key.Vehiculo,
+                          }
+                          ).ToList();
+
+            using var package = new ExcelPackage();
+
+            var worksheet = package.Workbook.Worksheets.Add("Lista Mantenimientos");
+
+            worksheet.Cells["A1"].LoadFromCollection(report, PrintHeaders: true);
+
+            for (var col = 1; col < report.Count + 1; col++)
+                worksheet.Column(col).AutoFit();
+
+            // Convertir el paquete de Excel a un array de bytes
+            byte[] fileBytes = package.GetAsByteArray();
+
+            // Devolver el archivo de Excel al usuario
+            return File(fileBytes, MediaTypeNames.Application.Octet, "mantenimientos.xlsx");
+        }
     // GET: Mantenimientos/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
@@ -378,3 +457,4 @@ public class MantenimientosController : Controller
         return _context.Mantenimientos.Any(e => e.MantenimientoId == id);
     }
 }
+
