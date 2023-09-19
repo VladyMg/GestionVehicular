@@ -148,8 +148,8 @@ public class MantenimientosController : Controller
         }
 
         ViewData["TipoMantenimientoId"] = new SelectList(_context.TiposMantenimiento, "TipoMantenimientoId", "Nombre", mantenimiento.TipoMantenimientoId);
-        ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Apellido", mantenimiento.UsuarioId);
-        ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "CapacidadCarga", mantenimiento.VehiculoId);
+        ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Cedula", mantenimiento.UsuarioId);
+        ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "Placa", mantenimiento.VehiculoId);
 
         var respuestos = GetObjectFromSession<List<Repuesto>>(nameof(Repuesto)) ?? new List<Repuesto>();
 
@@ -175,8 +175,8 @@ public class MantenimientosController : Controller
             return NotFound();
         }
         ViewData["TipoMantenimientoId"] = new SelectList(_context.TiposMantenimiento, "TipoMantenimientoId", "Nombre", mantenimiento.TipoMantenimientoId);
-        ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Apellido", mantenimiento.UsuarioId);
-        ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "CapacidadCarga", mantenimiento.VehiculoId);
+        ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Cedula", mantenimiento.UsuarioId);
+        ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "Placa", mantenimiento.VehiculoId);
 
         var repuestos = await _context.Repuestos.Where(x => x.MantenimientoId == mantenimiento.MantenimientoId).ToListAsync();
 
@@ -225,8 +225,8 @@ public class MantenimientosController : Controller
             return RedirectToAction(nameof(Index));
         }
         ViewData["TipoMantenimientoId"] = new SelectList(_context.TiposMantenimiento, "TipoMantenimientoId", "Nombre", mantenimiento.TipoMantenimientoId);
-        ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Apellido", mantenimiento.UsuarioId);
-        ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "CapacidadCarga", mantenimiento.VehiculoId);
+        ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Cedula", mantenimiento.UsuarioId);
+        ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "Placa", mantenimiento.VehiculoId);
 
         var repuestos = GetObjectFromSession<List<Repuesto>>(nameof(Repuesto)) ?? new List<Repuesto>();
 

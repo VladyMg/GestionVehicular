@@ -94,14 +94,15 @@ public class MovilizacionesController : Controller
         {
             movilizacion.EsActivo = true;
             movilizacion.FechaCreacion = DateTime.Now;
-
             _context.Add(movilizacion);
+            
+            await _context.SaveChangesAsync();
 
             var aprobacion = new Aprobaciones
             {
                 Tipo = "Movilizacion",
                 Estado = "Pendiente",
-                PartesNovedadesId = movilizacion.MovilizacionId,
+                MovilizacionId = movilizacion.MovilizacionId,
                 UsuarioId = movilizacion.UsuarioId,
                 FechaCreacion = DateTime.Now,
                 EsActivo = true

@@ -81,6 +81,7 @@ public class AbastecimientosController : Controller
         ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Cedula");
         ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "Placa");
         return View();
+        
     }
 
     // POST: Abastecimientos/Create
@@ -94,14 +95,15 @@ public class AbastecimientosController : Controller
         {
             abastecimiento.EsActivo = true;
             abastecimiento.FechaCreacion = DateTime.Now;
-
             _context.Add(abastecimiento);
+
+            await _context.SaveChangesAsync();
 
             var aprobacion = new Aprobaciones
             {
                 Tipo = "Abastecimiento",
                 Estado = "Pendiente",
-                PartesNovedadesId = abastecimiento.AbastecimientoId,
+                AbastecimientoId = abastecimiento.AbastecimientoId,
                 UsuarioId = abastecimiento.UsuarioId,
                 FechaCreacion = DateTime.Now,
                 EsActivo = true

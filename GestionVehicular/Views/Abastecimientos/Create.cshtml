@@ -18,8 +18,19 @@
                 <span asp-validation-for="Fecha" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Gasolinera" class="control-label"></label>
-                <input asp-for="Gasolinera" class="form-control" />
+                <label asp-for="Gasolinera" class="control-label">Gasolinera</label>
+                @Html.DropDownListFor(
+                model => model.Gasolinera,
+                new SelectList(new[]
+                {
+                new SelectListItem { Value = "Primax", Text = "Primax" },
+                new SelectListItem { Value = "Petroecuador", Text = "Petroecuador" },
+                new SelectListItem { Value = "Terpel", Text = "Terpel" },
+              
+                }, "Value", "Text"),
+                "Seleccione la Gasolinera",
+                new { @class = "form-control" }
+                )
                 <span asp-validation-for="Gasolinera" class="text-danger"></span>
             </div>
             <div class="form-group">
