@@ -1,0 +1,60 @@
+﻿@model GestionVehicular.Models.Distrito
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1 class="text-secondary">Detalle</h1>
+
+<div>
+    <h4 class="text-success">Distrito</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Provincia)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Provincia)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NoDistrito)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NoDistrito)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Parroquia)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Parroquia)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CodDistrito)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CodDistrito)
+        </dd>
+        <dt class="col-sm-2">
+            Activo
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EsActivo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaCreacion)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FechaCreacion)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.DistritoId" class="btn btn-warning">Editar</a> |
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</div>

@@ -1,0 +1,54 @@
+﻿@model GestionVehicular.Models.Circuito
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1 class="text-secondary">Detalle</h1>
+
+<div>
+    <h4 class="text-success">Circuito</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NoCircuito)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NoCircuito)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CodCircuito)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CodCircuito)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Distrito)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Distrito.CodDistrito)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EsActivo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EsActivo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaCreacion)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FechaCreacion)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.CircuitoId" class="btn btn-warning">Editar</a> |
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</div>

@@ -1,0 +1,17 @@
+{
+    "dotnet.defaultSolution": "GestionVehicular.sln",
+    "spellright.language": [
+        "en",
+        "es"
+    ],
+    "spellright.documentTypes": [
+        "markdown",
+        "latex",
+        "plaintext"
+    ],
+    "spellright.parserByClass": {
+        "aspnetcorerazor": {
+            "parser": "plain"
+        }
+    }
+}

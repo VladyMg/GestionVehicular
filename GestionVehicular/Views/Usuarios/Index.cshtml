@@ -1,0 +1,108 @@
+﻿@model IEnumerable<GestionVehicular.Models.Usuario>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-secondary">Lista de Usuarios</h1>
+
+<p>
+    <a asp-action="Create" type="button" class="btn btn-success">Nuevo Usuario</a>
+</p>
+<table class="table table-sm">
+    <thead class="table-primary">
+        <tr>
+            <th>
+                Cédula
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellido)
+            </th>
+            <th>
+                Fecha de Nacimiento
+            </th>
+            <th>
+                Tipo de Sangre
+            </th>
+            <th>
+                Teléfono
+            </th>
+            <th>
+                Cuidad de Nacimiento
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rango)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rol)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subcircuito)
+            </th>
+            <th>
+                Activo
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cedula)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apellido)
+                </td>
+                <td>
+                    @{
+                        var fechaNacimiento = ((DateTime)item.FechaNacimiento).ToString("yyyy-MM-dd");
+                    }
+                    @fechaNacimiento
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipoSangre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefono)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CiudadNacimiento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rango)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rol.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subcircuito.Nombre)
+                </td>
+                <td>
+                    @{
+                        var activo = item.EsActivo ? "Si" : "No";
+                    }
+                    @activo
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.UsuarioId" class="btn btn-warning">Edit</a>
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.UsuarioId" class="btn btn-secondary">Details</a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.UsuarioId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

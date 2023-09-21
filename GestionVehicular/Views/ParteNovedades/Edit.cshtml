@@ -1,0 +1,156 @@
+﻿@model GestionVehicular.ViewModels.ParteNovedadRepuestoViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1 class="text-secondary">Editar</h1>
+
+<h4 class="text-success">Parte Novedad</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ParteNovedad.ParteNovedadId" />
+            <div class="form-group">
+                <label asp-for="ParteNovedad.Nombre" class="control-label"></label>
+                <input asp-for="ParteNovedad.Nombre" class="form-control" />
+                <span asp-validation-for="ParteNovedad.Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ParteNovedad.Nota" class="control-label"></label>
+                <input asp-for="ParteNovedad.Nota" class="form-control" />
+                <span asp-validation-for="ParteNovedad.Nota" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ParteNovedad.UsuarioId" class="control-label">Responsable</label>
+                <select asp-for="ParteNovedad.UsuarioId" class="form-control" asp-items="ViewBag.UsuarioId"></select>
+                <span asp-validation-for="ParteNovedad.UsuarioId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ParteNovedad.VehiculoId" class="control-label">Vehículo</label>
+                <select asp-for="ParteNovedad.VehiculoId" class="form-control" asp-items="ViewBag.VehiculoId"></select>
+                <span asp-validation-for="ParteNovedad.VehiculoId" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="ParteNovedad.EsActivo" /> Activo
+                </label>
+            </div>
+            <div class="form-group" style="display:none;">
+                <label asp-for="ParteNovedad.FechaCreacion" class="control-label"></label>
+                <input asp-for="ParteNovedad.FechaCreacion" class="form-control" />
+                <span asp-validation-for="ParteNovedad.FechaCreacion" class="text-danger"></span>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <input type="submit" value="Actualizar" class="btn btn-warning" />
+                    </div>
+                </div>
+                <div class="col-3">
+                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-8 text-center">
+        <h5 class="text-success">Añadir Repuesto Utilizado</h5>
+        <form asp-action="AddRepuesto">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row justify-content-center">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="Repuesto.Nombre" class="control-label"></label>
+                        <input asp-for="Repuesto.Nombre" class="form-control" />
+                        <span asp-validation-for="Repuesto.Nombre" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="Repuesto.Razon" class="control-label"></label>
+                        <textarea asp-for="Repuesto.Razon" class="form-control" rows="1"></textarea>
+                        <span asp-validation-for="Repuesto.Razon" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="Repuesto.Cost" class="control-label"></label>
+                        <input asp-for="Repuesto.Cost" class="form-control" />
+                        <span asp-validation-for="Repuesto.Cost" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-4" style="display: none;">
+                    <div class="form-group">
+                        <label asp-for="Repuesto.MantenimientoId" class="control-label"></label>
+                        <input asp-for="Repuesto.MantenimientoId" class="form-control" />
+                        <span asp-validation-for="Repuesto.MantenimientoId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-4 text-center">
+                    <br />
+                    <div class="form-group">
+                        <input type="submit" value="Añadir" class="btn btn-warning" />
+                    </div>
+                </div>
+            </div>
+        </form>
+        <hr />
+        <div class="row">
+            <div class="col-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Repuesto.Nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Repuesto.Razon)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Repuesto.Cost)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int index = 0;
+                        }
+                        @foreach (var item in Model.Repuestos)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Razon)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Cost)
+                                </td>
+                                <td>
+                                    <form asp-action="RemoveRepuesto" id="@index">
+                                        <input type="submit" value="Borrar" class="btn btn-danger" />
+                                    </form>
+                                    <br />
+                                </td>
+                            </tr>
+                            index++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

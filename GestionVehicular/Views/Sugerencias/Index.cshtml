@@ -1,0 +1,120 @@
+﻿@model IEnumerable<GestionVehicular.Models.Sugerencia>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-secondary">Lista de Sugerencias</h1>
+<hr />
+@using (Html.BeginForm("Index", "Sugerencias", FormMethod.Get, new { id = "reportForm" }))
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-4">
+                Fecha inicio: @Html.TextBox("fechaInicio", null, new { @class = "form-control", type = "date", id = "fechaInicio" })
+            </div>
+            <div class="col-4">
+                Fecha fin: @Html.TextBox("fechaFin", null, new { @class = "form-control", type = "date",  id = "fechaFin" })
+            </div>
+            <div class="col-2" style="display: none">
+                <br>
+                <input type="submit" value="Filtrar" class="btn btn-success" />
+            </div>
+            <div class="col-2">
+                <br>
+                @Html.ActionLink("Exportar Reporte", "ExportarExcel", null, null, new { @class = "btn btn-primary", id = "exportarExcel" })
+            </div>
+        </div>
+    </div>
+}
+<hr />
+<table class="table table-sm">
+    <thead class="table-primary">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                Tipo de Sugerencia
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombres)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellidos)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contacto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Detalle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Circuito)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subcircuito)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @{
+                        var fechaNacimiento = ((DateTime)item.Fecha).ToString("yyyy-MM-dd");
+                    }
+                    @fechaNacimiento
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipoSugerencia.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombres)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apellidos)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Contacto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Detalle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Circuito.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subcircuito.Nombre)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Función para exportar a Excel
+        $(document).ready(function () {
+            $('#exportarExcel').click(function (event) {
+                event.preventDefault();  // Detener la acción predeterminada del enlace
+                var url = $(this).attr('href');  // Obtener la URL original del enlace
+                var fechaInicio = $('#fechaInicio').val();
+                var fechaFin = $('#fechaFin').val();
+                // Agregar las fechas a la URL como parámetros de consulta
+                url += '?fechaInicio=' + fechaInicio + '&fechaFin=' + fechaFin;
+                window.location.href = url;  // Redireccionar al usuario a la nueva URL
+            });
+        });
+        // Función para enviar el formulario cuando se cambie la fecha
+        $(document).ready(function () {
+            $('#fechaInicio, #fechaFin').change(function () {
+                $('#reportForm').submit();
+            });
+        });
+    </script>
+
+}
