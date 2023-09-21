@@ -12,7 +12,7 @@ using System.Net.Mime;
 
 namespace GestionVehicular.Controllers
 {
-   public class ReporteController : Controller
+    public class ReporteController : Controller
     {
         private readonly ApplicationDbContext _context;
 
@@ -40,11 +40,9 @@ namespace GestionVehicular.Controllers
             applicationDbContext = applicationDbContext.Include(s => s.Mantenimiento.TipoMantenimiento).Include(s => s.Mantenimiento.Usuario).Include(s => s.Mantenimiento.Vehiculo);
 
             return View(await applicationDbContext.ToListAsync());
-            
+
         }
 
-
-        
         // POST: Sugerencias/ExportarExcel        
         /* public async Task<IActionResult> ExportarExcel(DateTime? fechaInicio, DateTime? fechaFin)
         {
@@ -99,4 +97,3 @@ namespace GestionVehicular.Controllers
         }*/
     }
 }
- 

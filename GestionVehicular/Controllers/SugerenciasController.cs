@@ -72,9 +72,12 @@ namespace GestionVehicular.Controllers
             return View(sugerencia);
         }
 
-        // POST: Sugerencias/ExportarExcel        
+        // POST: Sugerencias/ExportarExcel
         public async Task<IActionResult> ExportarExcel(DateTime? fechaInicio, DateTime? fechaFin)
         {
+            // Set the LicenseContext
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
             var applicationDbContext = _context.Sugerencias.AsQueryable();
 
             if (fechaInicio.HasValue)

@@ -30,17 +30,17 @@ public class MantenimientosController : Controller
     {
         var applicationDbContext = _context.Mantenimientos.AsQueryable();
 
-            if (fechaInicio.HasValue)
-            {
-                applicationDbContext = applicationDbContext.Where(s => s.FechaCreacion>= fechaInicio);
-            }
+        if (fechaInicio.HasValue)
+        {
+            applicationDbContext = applicationDbContext.Where(s => s.FechaCreacion >= fechaInicio);
+        }
 
-            if (fechaFin.HasValue)
-            {
-                applicationDbContext = applicationDbContext.Where(s => s.FechaCreacion <= fechaFin);
-            }
+        if (fechaFin.HasValue)
+        {
+            applicationDbContext = applicationDbContext.Where(s => s.FechaCreacion <= fechaFin);
+        }
 
-            applicationDbContext = applicationDbContext.Include(s => s.TipoMantenimiento).Include(s => s.Usuario).Include(s => s.Vehiculo);
+        applicationDbContext = applicationDbContext.Include(s => s.TipoMantenimiento).Include(s => s.Usuario).Include(s => s.Vehiculo);
 
         var mantenimientos = await _context.Mantenimientos
         .Include(m => m.TipoMantenimiento)
@@ -70,7 +70,7 @@ public class MantenimientosController : Controller
                     };
 
         /* return View(query.OrderByDescending(x => x.FechaCreacion).ToList()); */
-     return View(await applicationDbContext.ToListAsync()); 
+        return View(await applicationDbContext.ToListAsync());
     }
 
 
@@ -185,61 +185,64 @@ public class MantenimientosController : Controller
             Repuestos = respuestos
         });
     }
-// POST: Manteniminento/ExportarExcel        
-        public async Task<IActionResult> ExportarExcel(DateTime? fechaInicio, DateTime? fechaFin)
+    // POST: Manteniminento/ExportarExcel
+    public async Task<IActionResult> ExportarExcel(DateTime? fechaInicio, DateTime? fechaFin)
+    {
+        // Set the LicenseContext
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+        var applicationDbContext = _context.Mantenimientos.AsQueryable();
+
+        if (fechaInicio.HasValue)
         {
-            var applicationDbContext = _context.Mantenimientos.AsQueryable();
-
-            if (fechaInicio.HasValue)
-            {
-                applicationDbContext = applicationDbContext.Where(s => s.FechaCreacion >= fechaInicio);
-            }
-
-            if (fechaFin.HasValue)
-            {
-                applicationDbContext = applicationDbContext.Where(s => s.FechaCreacion <= fechaFin);
-            }
-
-            applicationDbContext = applicationDbContext.Include(s => s.TipoMantenimiento).Include(s => s.Usuario).Include(s => s.Vehiculo);
-
-            var mantenimientos = await applicationDbContext.ToListAsync();
-
-            var report = (from s in mantenimientos
-                          group s by new
-                          {    
-                              TipoMantenimiento = s.TipoMantenimiento.Nombre,
-                              Usuario = s.Usuario.Cedula,
-                              Vehiculo = s.Vehiculo.Placa,
-                              /* TipoSugerenciaNombre = s.TipoSugerencia.Nombre,
-                              CircuitoNombre = s.Circuito.Nombre,
-                              SubcircuitoNombre = s.Subcircuito.Nombre, */
-                          } into g
-                          select new
-                          {
-                              FechaInicio = fechaInicio.ToString(),
-                              FechaFin = fechaFin.ToString(),
-                              Cantidad = g.Count(),
-                              Tipo = g.Key.TipoMantenimiento,
-                              Usuario = g.Key.Usuario,
-                              Vehiculo = g.Key.Vehiculo,
-                          }
-                          ).ToList();
-
-            using var package = new ExcelPackage();
-
-            var worksheet = package.Workbook.Worksheets.Add("Lista Mantenimientos");
-
-            worksheet.Cells["A1"].LoadFromCollection(report, PrintHeaders: true);
-
-            for (var col = 1; col < report.Count + 1; col++)
-                worksheet.Column(col).AutoFit();
-
-            // Convertir el paquete de Excel a un array de bytes
-            byte[] fileBytes = package.GetAsByteArray();
-
-            // Devolver el archivo de Excel al usuario
-            return File(fileBytes, MediaTypeNames.Application.Octet, "mantenimientos.xlsx");
+            applicationDbContext = applicationDbContext.Where(s => s.FechaCreacion >= fechaInicio);
         }
+
+        if (fechaFin.HasValue)
+        {
+            applicationDbContext = applicationDbContext.Where(s => s.FechaCreacion <= fechaFin);
+        }
+
+        applicationDbContext = applicationDbContext.Include(s => s.TipoMantenimiento).Include(s => s.Usuario).Include(s => s.Vehiculo);
+
+        var mantenimientos = await applicationDbContext.ToListAsync();
+
+        var report = (from s in mantenimientos
+                      group s by new
+                      {
+                          TipoMantenimiento = s.TipoMantenimiento.Nombre,
+                          Usuario = s.Usuario.Cedula,
+                          Vehiculo = s.Vehiculo.Placa,
+                          /* TipoSugerenciaNombre = s.TipoSugerencia.Nombre,
+                          CircuitoNombre = s.Circuito.Nombre,
+                          SubcircuitoNombre = s.Subcircuito.Nombre, */
+                      } into g
+                      select new
+                      {
+                          FechaInicio = fechaInicio.ToString(),
+                          FechaFin = fechaFin.ToString(),
+                          Cantidad = g.Count(),
+                          Tipo = g.Key.TipoMantenimiento,
+                          Usuario = g.Key.Usuario,
+                          Vehiculo = g.Key.Vehiculo,
+                      }
+                      ).ToList();
+
+        using var package = new ExcelPackage();
+
+        var worksheet = package.Workbook.Worksheets.Add("Lista Mantenimientos");
+
+        worksheet.Cells["A1"].LoadFromCollection(report, PrintHeaders: true);
+
+        for (var col = 1; col < report.Count + 1; col++)
+            worksheet.Column(col).AutoFit();
+
+        // Convertir el paquete de Excel a un array de bytes
+        byte[] fileBytes = package.GetAsByteArray();
+
+        // Devolver el archivo de Excel al usuario
+        return File(fileBytes, MediaTypeNames.Application.Octet, "mantenimientos.xlsx");
+    }
     // GET: Mantenimientos/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
