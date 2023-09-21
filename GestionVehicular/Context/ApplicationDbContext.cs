@@ -36,6 +36,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<Sugerencia> Sugerencias { get; set; }
 
     public DbSet<Repuesto> Repuestos { get; set; }
+    
+    public DbSet<Gasolinera> Gasolineras { get; set; }
 
 
 }

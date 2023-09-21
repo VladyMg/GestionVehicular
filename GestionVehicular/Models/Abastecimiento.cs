@@ -33,6 +33,10 @@ public class Abastecimiento
     public int? VehiculoId { get; set; }
     public virtual Vehiculo Vehiculo { get; set; }
 
+    [ForeignKey("Gasolinera")]
+    public int? GasolineraId { get; set; }
+    public virtual Gasolinera Gasolineras { get; set; }
+
     [Required]
     public bool EsActivo { get; set; }
 
