@@ -18,19 +18,8 @@
                 <span asp-validation-for="Fecha" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Gasolinera" class="control-label">Gasolinera</label>
-                @Html.DropDownListFor(
-                model => model.Gasolinera,
-                new SelectList(new[]
-                {
-                new SelectListItem { Value = "Primax", Text = "Primax" },
-                new SelectListItem { Value = "Petroecuador", Text = "Petroecuador" },
-                new SelectListItem { Value = "Terpel", Text = "Terpel" },
-              
-                }, "Value", "Text"),
-                "Seleccione la Gasolinera",
-                new { @class = "form-control" }
-                )
+                <label asp-for="Gasolinera" class="control-label"></label>
+                <input asp-for="Gasolinera" class="form-control" />
                 <span asp-validation-for="Gasolinera" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -54,12 +43,16 @@
                 <span asp-validation-for="KilometrosSalida" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UsuarioId" class="control-label"></label>
+                <label asp-for="Usuario" class="control-label"></label>
                 <select asp-for="UsuarioId" class="form-control" asp-items="ViewBag.UsuarioId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="VehiculoId" class="control-label"></label>
+                <label asp-for="Vehiculo" class="control-label"></label>
                 <select asp-for="VehiculoId" class="form-control" asp-items="ViewBag.VehiculoId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gasolinera" class="control-label"></label>
+                <select asp-for="GasolineraId" class="form-control" asp-items="ViewBag.GasolineraId"></select>
             </div>
 
             <hr />

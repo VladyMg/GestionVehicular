@@ -40,6 +40,9 @@
                 @Html.DisplayNameFor(model => model.Vehiculo)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Gasolinera)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.EsActivo)
             </th>
             <th>
@@ -76,7 +79,10 @@
                     @Html.DisplayFor(modelItem => item.Usuario.Nombre) @Html.DisplayFor(modelItem => item.Usuario.Apellido)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Vehiculo.CapacidadCarga)
+                    @Html.DisplayFor(modelItem => item.Vehiculo.Placa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gasolineras.Nombre)
                 </td>
                 <td>
                             @Html.DisplayFor(modelItem => item.Aprobacion.Estado)

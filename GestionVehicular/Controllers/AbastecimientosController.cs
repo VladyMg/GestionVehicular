@@ -19,6 +19,7 @@ public class AbastecimientosController : Controller
         var abastecimientos = await _context.Abastecimientos
         .Include(a => a.Usuario)
         .Include(a => a.Vehiculo)
+        .Include(a => a.Gasolineras)
         .ToListAsync();
 
         var aprobaciones = await _context.Aprobaciones
@@ -43,6 +44,7 @@ public class AbastecimientosController : Controller
                         FechaCreacion = abastecimiento.FechaCreacion,
                         Usuario = abastecimiento.Usuario,
                         Vehiculo = abastecimiento.Vehiculo,
+                        Gasolineras = abastecimiento.Gasolineras,
                         Aprobacion = aprobacion
                     };
 
@@ -80,6 +82,7 @@ public class AbastecimientosController : Controller
     {
         ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Cedula");
         ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "Placa");
+        ViewData["GasolineraId"] = new SelectList(_context.Gasolineras, "GasolineraId", "Nombre");
         return View();
         
     }
@@ -89,7 +92,7 @@ public class AbastecimientosController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("AbastecimientoId,Fecha,Gasolinera,HoraLlegada,HoraSalida,Combustible,KilometrosSalida,UsuarioId,VehiculoId,EsActivo,FechaCreacion")] Abastecimiento abastecimiento)
+    public async Task<IActionResult> Create([Bind("AbastecimientoId,Gasolinera,Fecha,HoraLlegada,HoraSalida,Combustible,KilometrosSalida,UsuarioId,VehiculoId,EsActivo,FechaCreacion,GasolineraId")] Abastecimiento abastecimiento)
     {
         if (ModelState.IsValid)
         {
@@ -116,6 +119,7 @@ public class AbastecimientosController : Controller
         }
         ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Cedula", abastecimiento.UsuarioId);
         ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "Placa", abastecimiento.VehiculoId);
+        ViewData["GasolineraId"] = new SelectList(_context.Gasolineras, "GasolineraId", "Nombre", abastecimiento.GasolineraId);
         return View(abastecimiento);
     }
 
@@ -134,6 +138,7 @@ public class AbastecimientosController : Controller
         }
         ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Cedula", abastecimiento.UsuarioId);
         ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "Placa", abastecimiento.VehiculoId);
+        ViewData["GasolineraId"] = new SelectList(_context.Gasolineras, "GasolineraId", "Nombre", abastecimiento.GasolineraId);
         return View(abastecimiento);
     }
 
@@ -142,7 +147,7 @@ public class AbastecimientosController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("AbastecimientoId,Fecha,Gasolinera,HoraLlegada,HoraSalida,Combustible,KilometrosSalida,UsuarioId,VehiculoId,EsActivo,FechaCreacion")] Abastecimiento abastecimiento)
+    public async Task<IActionResult> Edit(int id, [Bind("AbastecimientoId,Fecha,Gasolinera,HoraLlegada,HoraSalida,Combustible,KilometrosSalida,UsuarioId,VehiculoId,EsActivo,FechaCreacion,GasolineraId")] Abastecimiento abastecimiento)
     {
         if (id != abastecimiento.AbastecimientoId)
         {
@@ -171,6 +176,7 @@ public class AbastecimientosController : Controller
         }
         ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Cedula", abastecimiento.UsuarioId);
         ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "VehiculoId", "Placa", abastecimiento.VehiculoId);
+        ViewData["GasolineraId"] = new SelectList(_context.Gasolineras, "GasolineraId", "Nombre", abastecimiento.GasolineraId);
         return View(abastecimiento);
     }
 
@@ -185,6 +191,7 @@ public class AbastecimientosController : Controller
         var abastecimiento = await _context.Abastecimientos
             .Include(a => a.Usuario)
             .Include(a => a.Vehiculo)
+            .Include(a => a.Gasolineras)
             .FirstOrDefaultAsync(m => m.AbastecimientoId == id);
         if (abastecimiento == null)
         {
