@@ -41,6 +41,9 @@ public class MovilizacionesController : Controller
                         VehiculoId = movilizacion.VehiculoId,
                         EsActivo = movilizacion.EsActivo,
                         FechaCreacion = movilizacion.FechaCreacion,
+                        Ruta = movilizacion.Ruta,
+                        NumeroOcupante = movilizacion.NumeroOcupante,
+                        DatoOcupante = movilizacion.DatoOcupante,
                         Usuario = movilizacion.Usuario,
                         Vehiculo = movilizacion.Vehiculo,
                         Aprobacion = aprobacion
@@ -88,7 +91,7 @@ public class MovilizacionesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("MovilizacionId,Fecha,HoraSalida,HoraLlegada,KilometrosSalida,KilometrajeLlegada,Observacion,UsuarioId,VehiculoId,EsActivo,FechaCreacion")] Movilizacion movilizacion)
+    public async Task<IActionResult> Create([Bind("MovilizacionId,Fecha,HoraSalida,HoraLlegada,KilometrosSalida,KilometrajeLlegada,Observacion,UsuarioId,VehiculoId,EsActivo,FechaCreacion,Ruta,NumeroOcupante,DatoOcupante")] Movilizacion movilizacion)
     {
         if (ModelState.IsValid)
         {
@@ -142,7 +145,7 @@ public class MovilizacionesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("MovilizacionId,Fecha,HoraSalida,HoraLlegada,KilometrosSalida,KilometrajeLlegada,Observacion,UsuarioId,VehiculoId,EsActivo,FechaCreacion")] Movilizacion movilizacion)
+    public async Task<IActionResult> Edit(int id, [Bind("MovilizacionId,Fecha,HoraSalida,HoraLlegada,KilometrosSalida,KilometrajeLlegada,Observacion,UsuarioId,VehiculoId,EsActivo,FechaCreacion,Ruta,NumeroOcupante,DatoOcupante")] Movilizacion movilizacion)
     {
         if (id != movilizacion.MovilizacionId)
         {

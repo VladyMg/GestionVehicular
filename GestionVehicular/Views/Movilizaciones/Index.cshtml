@@ -32,7 +32,16 @@
                         Kilómetros de Llegada
                     </th>
                     <th>
-                        Observación
+                        Motivo
+                    </th>
+                    <th>
+                        Ruta
+                    </th>
+                    <th>
+                        NumeroOcupante
+                    </th>
+                    <th>
+                        DatoOcupante
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Usuario)
@@ -75,6 +84,15 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Observacion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ruta)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NumeroOcupante)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DatoOcupante)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Usuario.Nombre) @Html.DisplayFor(modelItem =>

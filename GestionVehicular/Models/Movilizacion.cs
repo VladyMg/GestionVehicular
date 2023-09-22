@@ -38,6 +38,17 @@ public class Movilizacion
 
     [Required]
     public DateTime FechaCreacion { get; set; }
+    
+    [Required]
+    [MaxLength(400)]
+    public string Ruta { get; set; }
+
+    [Required]
+    public int NumeroOcupante { get; set; }
+    
+    [Required]
+    [MaxLength(400)]
+    public string DatoOcupante { get; set; }
 
     public virtual Aprobaciones Aprobacion { get; set; }
 }
