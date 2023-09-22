@@ -33,7 +33,7 @@
                                 <a class="nav-link text-warning" asp-area="" asp-controller="Home"
                                    asp-action="Index">Home</a>
                             </li>
-                            @if (role == "Administrador")
+                            @if (role == "Administrador" || role == "Técnico 1")
                             {
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -61,7 +61,7 @@
                                     </ul>
                                 </li>
                             }
-                            @if (role == "Administrador" || role == "Técnico 1" || role == "Técnico 2")
+                            @if (role == "Administrador" || role == "Conductor" || role == "Técnico 1" )
                             {
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -112,7 +112,7 @@
                                             <a class="nav-link text-primary" asp-area="" asp-controller="Movilizaciones"
                                            asp-action="Index">Movilizaciones</a>
                                         </li>
-                                        @if (role == "Administrador" || role == "Técnico 2")
+                                        @if (role == "Administrador" || role == "Técnico 1")
                                         {
                                             <li>
                                                 <hr class="dropdown-divider">
@@ -126,7 +126,7 @@
                                 </li>
                             }
 
-                            @if (role == "Administrador")
+                            @if (role == "Administrador" || role == "Técnico 1" )
                             {
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
